@@ -83,6 +83,13 @@ class LinkedListQueue {
         }
         System.out.println();
     }
+
+    public void perulangan() {
+        for (int i = 1; i <= 10; i++){
+            
+        };
+
+    }
 }
 
 public class QueueLinkedList {
@@ -96,6 +103,7 @@ public class QueueLinkedList {
             System.out.println("2. Dequeue");
             System.out.println("3. Swap");
             System.out.println("4. Tampilkan Queue");
+            System.out.println("5. Perulangan");
             System.out.println("0. Keluar");
             System.out.print("Pilih: ");
             int pilih = sc.nextInt();
@@ -118,6 +126,9 @@ public class QueueLinkedList {
                     break;
                 case 4:
                     queue.show();
+                    break;
+                case 5:
+                    queue.perulangan();
                     break;
                 case 0:
                     System.out.println("Keluar dari Queue.");
