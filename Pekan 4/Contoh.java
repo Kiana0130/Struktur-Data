@@ -10,13 +10,13 @@ public class Contoh {
         int[] arr = new int[size];
         Random random = new Random();
         for (int i = 0; i < size; i++) {
-            arr[i] = random.nextInt();
+            arr[i] = random.nextInt(100000);
         }
         return arr;
     }
 
     public static int[] terurut () {
-        return new int[]{23, 17, 4, 90, 56, 32, 8, 77, 11, 1};
+        return new int[]{ 9, 2, 8, 3, 7, 4, 6, 5, 1, 0};
     }
 
     public static void bubbleSort(int[] arr) {
@@ -67,10 +67,10 @@ public class Contoh {
             else if (algoName.equals("Selection")) selectionSort(copyKecil);
             else if (algoName.equals("Insertion")) insertionSort(copyKecil);
             long end = System.nanoTime();
-            double elapsedMs = (end - start) / 1_000_000.0;
+            double elapsedMs = (end - start) / 1_000_000_000.0;
 
             System.out.println(algoName + " Sort");
-            System.out.printf("%s  %.3f ms%n", Arrays.toString(copyKecil), elapsedMs);
+            System.out.printf("%s  %.6f Detik%n", Arrays.toString(copyKecil), elapsedMs);
 
             int[] copyBesar = dataBesar.clone();
             start = System.nanoTime();
@@ -80,7 +80,7 @@ public class Contoh {
             end = System.nanoTime();
             double elapsedSec = (end - start) / 1_000_000_000.0;
 
-            System.out.printf("100.000 : %.3f detik%n%n", elapsedSec);
+            System.out.printf("100.000 : %.6f detik%n%n", elapsedSec);
             
         } catch (OutOfMemoryError e) {
             System.out.println(algoName + " Sort gagal untuk data besar (memori habis)\n");
