@@ -1,23 +1,17 @@
 import java.awt.*;
 import javax.swing.*;
 
-// ======================================
-// Node class for Red-Black Tree
-// ======================================
 class Node {
-    String data; // <--- PERUBAHAN: Tipe data diubah ke String
+    String data; 
     Node left, right, parent;
-    boolean color; // true = RED, false = BLACK
+    boolean color; 
 
-    Node(String data) { // <--- PERUBAHAN: Constructor menggunakan String
+    Node(String data) { 
         this.data = data;
-        color = true; // New nodes are always RED
+        color = true; 
     }
 }
 
-// ======================================
-// Red-Black Tree Implementation
-// ======================================
 class RedBlackTree {
     private Node root;
     private final boolean RED = true;
@@ -27,7 +21,6 @@ class RedBlackTree {
         return root;
     }
 
-    // Left Rotate (Tidak ada perubahan)
     private void rotateLeft(Node x) {
         Node y = x.right;
         x.right = y.left;
@@ -46,7 +39,6 @@ class RedBlackTree {
         x.parent = y;
     }
 
-    // Right Rotate (Tidak ada perubahan)
     private void rotateRight(Node x) {
         Node y = x.left;
         x.left = y.right;
@@ -65,19 +57,16 @@ class RedBlackTree {
         x.parent = y;
     }
 
-    // Insert node
-    public void insert(String data) { // <--- PERUBAHAN: Tipe data parameter
+    public void insert(String data) {
         Node newNode = new Node(data);
         root = bstInsert(root, newNode);
         fixViolation(newNode);
     }
 
-    // Standard BST insert
     private Node bstInsert(Node root, Node pt) {
         if (root == null)
             return pt;
 
-        // <--- PERUBAHAN: Logika perbandingan menggunakan compareTo untuk String
         if (pt.data.compareTo(root.data) < 0) {
             root.left = bstInsert(root.left, pt);
             root.left.parent = root;
@@ -85,11 +74,9 @@ class RedBlackTree {
             root.right = bstInsert(root.right, pt);
             root.right.parent = root;
         }
-        // Jika data sama (compareTo == 0), tidak di-insert (menghindari duplikat)
         return root;
     }
 
-    // Fix Red-Black Tree Violations (Tidak ada perubahan)
     private void fixViolation(Node pt) {
         Node parentPt = null;
         Node grandParentPt = null;
@@ -144,9 +131,6 @@ class RedBlackTree {
     }
 }
 
-// ======================================
-// Visualizer Panel
-// ======================================
 class TreePanel extends JPanel {
     private final RedBlackTree tree;
 
@@ -164,39 +148,31 @@ class TreePanel extends JPanel {
     private void drawTree(Graphics g, Node node, int x, int y, int xOffset) {
         if (node == null) return;
 
-        // Draw left branch
         if (node.left != null) {
-            g.setColor(Color.BLACK); // <--- PERUBAHAN: Menetapkan warna garis
+            g.setColor(Color.BLACK); 
             g.drawLine(x, y, x - xOffset, y + 80);
             drawTree(g, node.left, x - xOffset, y + 80, xOffset / 2);
         }
 
-        // Draw right branch
         if (node.right != null) {
-            g.setColor(Color.BLACK); // <--- PERUBAHAN: Menetapkan warna garis
+            g.setColor(Color.BLACK); 
             g.drawLine(x, y, x + xOffset, y + 80);
             drawTree(g, node.right, x + xOffset, y + 80, xOffset / 2);
         }
 
-        // Draw node circle
         g.setColor(node.color ? Color.RED : Color.BLACK);
         g.fillOval(x - 15, y - 15, 30, 30);
 
-        // Node border
         g.setColor(Color.WHITE);
         g.drawOval(x - 15, y - 15, 30, 30);
 
-        // Draw text (value)
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 14));
-        String val = String.valueOf(node.data); // Ini sudah otomatis menangani String
+        String val = String.valueOf(node.data); 
         g.drawString(val, x - g.getFontMetrics().stringWidth(val) / 2, y + 5);
     }
 }
 
-// ======================================
-// Main Frame
-// ======================================
 public class RedBlackTreeVisualizer extends JFrame {
     private final RedBlackTree tree = new RedBlackTree();
     private final TreePanel treePanel = new TreePanel(tree);
@@ -207,53 +183,40 @@ public class RedBlackTreeVisualizer extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // --- PERUBAHAN BESAR PADA UI CONTROL PANEL ---
-
-        // 1. Buat Panel Kontrol dengan FlowLayout
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
         controlPanel.setPreferredSize(new Dimension(900, 70));
         controlPanel.setBackground(new Color(245, 245, 245));
 
-        // 2. Siapkan Komponen
-        JLabel label = new JLabel("Masukkan data:"); // <-- PERUBAHAN: Teks label
+        JLabel label = new JLabel("Masukkan data:"); 
         JTextField input = new JTextField();
         JButton insertButton = new JButton("Insert");
 
-        // 3. Atur Font dan Ukuran yang Diinginkan (PreferredSize)
         Font font = new Font("Arial", Font.BOLD, 18);
         label.setFont(font);
         input.setFont(font);
         insertButton.setFont(font);
 
-        // Gunakan setPreferredSize, bukan setBounds
         input.setPreferredSize(new Dimension(300, 40));
         insertButton.setPreferredSize(new Dimension(130, 40));
 
-        // 4. Tombol aksi
         insertButton.addActionListener(e -> {
-            // <--- PERUBAHAN: Logika untuk menangani String
             String val = input.getText(); 
 
-            // Validasi input agar tidak kosong
             if (val == null || val.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Input tidak boleh kosong!");
                 return;
             }
             
-            // Tidak perlu Integer.parseInt() lagi
-            tree.insert(val.trim()); // Langsung insert String (trim untuk hapus spasi)
+            tree.insert(val.trim()); 
             treePanel.repaint();
             input.setText("");
 
-            // Hapus try-catch karena tidak ada lagi NumberFormatException
         });
 
-        // 5. Tambahkan komponen ke controlPanel
         controlPanel.add(label);
         controlPanel.add(input);
         controlPanel.add(insertButton);
 
-        // 6. Tambahkan ke frame
         add(treePanel, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.SOUTH);
     }
