@@ -154,31 +154,21 @@ public class DictionaryApp extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
 
         // --- Action Listeners ---
-        ActionListener generalSearchAction = e -> filterAndDisplayWords(searchField.getText());
+        ActionListener generalSearchAction = e -> performGlobalSearch();
         searchField.addActionListener(generalSearchAction);
         searchIcon.addActionListener(generalSearchAction);
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                performSearch();
+                performGlobalSearch();
             }
             @Override
             public void removeUpdate(DocumentEvent e) {
-                performSearch();
+                performGlobalSearch();
             }
             @Override
             public void changedUpdate(DocumentEvent e) {
-                performSearch();
-            }
-
-            private void performSearch() {
-                String text = searchField.getText();
-                // Cek agar Placeholder "Pencarian Teks" tidak dianggap sebagai kata kunci pencarian
-                if (text.equals("Pencarian Teks") && searchField.getForeground() == Color.GRAY) {
-                    filterAndDisplayWords("");
-                } else {
-                    filterAndDisplayWords(text);
-                }
+                performGlobalSearch();
             }
         });
 
@@ -255,10 +245,22 @@ public class DictionaryApp extends JFrame {
             }
         });
     }
+    private void performGlobalSearch() {
+        String text = searchField.getText();
+        
+        // Logika: Jika teksnya "Pencarian Teks" DAN warnanya ABU-ABU,
+        // anggap user belum mengetik apa-apa (kosong).
+        if (text.equals("Pencarian Teks") && searchField.getForeground() == Color.GRAY) {
+            filterAndDisplayWords(""); 
+        } else {
+            filterAndDisplayWords(text);
+        }
+    }
 
     private void filterAndDisplayWords(String query) {
         contentPanel.removeAll(); 
 
+        String cleanQuery = query.trim().toLowerCase();
         List<DictionaryEntry> allEntries = dictionaryManager.getAllSortedEntries();
         
         if (currentLanguage.equals("Eng")) {
@@ -272,7 +274,7 @@ public class DictionaryApp extends JFrame {
         for (DictionaryEntry entry : allEntries) {
             String targetWord = currentLanguage.equals("ID") ? entry.getIndoWord() : entry.getEngWord();
             
-            if (!query.isEmpty() && !targetWord.toLowerCase().contains(query.toLowerCase())) {
+            if (!query.isEmpty() && !targetWord.toLowerCase().contains(cleanQuery)) {
                 continue;
             }
 
