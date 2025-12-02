@@ -6,11 +6,11 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -22,6 +22,7 @@ public class DictionaryApp extends JFrame {
     private JButton idButton;
     private JButton engButton;
 
+    // Default bahasa aktif adalah Indonesia
     private String currentLanguage = "ID";
 
     public DictionaryApp() {
@@ -29,59 +30,51 @@ public class DictionaryApp extends JFrame {
         dictionaryManager = new DictionaryManager();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 700);
+        setSize(980, 700);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // --- Style & Fonts ---
+        // --- Style Fonts & Colors ---
         Font searchFieldFont = new Font("Segoe UI", Font.PLAIN, 16);
         Font buttonFont = new Font("Segoe UI", Font.BOLD, 14);
 
         // --- Panel Header (Top) ---
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(new Color(240, 240, 240)); 
-        headerPanel.setBorder(new EmptyBorder(10, 20, 10, 20));
+        headerPanel.setBorder(new EmptyBorder(15, 20, 15, 20));
 
-        // Search Field Setting
+        // 1. Search Field
         searchField = new JTextField("Pencarian Teks", 25);
         searchField.setFont(searchFieldFont);
         searchField.setForeground(Color.GRAY);
-        searchField.setPreferredSize(new Dimension(300, 35));
-        
-        // Atur padding kiri saja untuk teks
         searchField.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0)); 
 
-        // Logika Focus Listener yang memastikan warna teks terlihat
+        // Placeholder Logic
         searchField.addFocusListener(new java.awt.event.FocusAdapter() {
              public void focusGained(java.awt.event.FocusEvent evt) {
                  if (searchField.getText().equals("Pencarian Teks")) {
                      searchField.setText("");
-                     searchField.setForeground(Color.BLACK); // Warna teks saat diketik
+                     searchField.setForeground(Color.BLACK);
                  }
              }
              public void focusLost(java.awt.event.FocusEvent evt) {
                  if (searchField.getText().isEmpty()) {
                      searchField.setText("Pencarian Teks");
-                     searchField.setForeground(Color.GRAY); // Warna teks placeholder
+                     searchField.setForeground(Color.GRAY);
                  }
              }
          });
         
-        // Search Icon Button
         JButton searchIcon = new JButton(new ImageIcon(createSearchIcon(16, 16)));
         searchIcon.setBorderPainted(false);
         searchIcon.setContentAreaFilled(false);
         searchIcon.setFocusPainted(false);
         searchIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Search Input Wrapper (BorderLayout untuk menempatkan Field dan Icon)
         JPanel searchInputWrapper = new JPanel(new BorderLayout());
         searchInputWrapper.setBackground(Color.WHITE);
-        
-        // Menggunakan border standar tebal 1 untuk tampilan yang stabil
         searchInputWrapper.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1)); 
         
-        // Ikon Wrapper untuk Padding
         JPanel iconWrapper = new JPanel(new BorderLayout());
         iconWrapper.setBackground(Color.WHITE);
         iconWrapper.add(searchIcon, BorderLayout.CENTER);
@@ -90,14 +83,13 @@ public class DictionaryApp extends JFrame {
 
         searchInputWrapper.add(searchField, BorderLayout.CENTER);
         searchInputWrapper.add(iconWrapper, BorderLayout.EAST);
-        searchInputWrapper.setPreferredSize(new Dimension(350, 35));
+        searchInputWrapper.setPreferredSize(new Dimension(350, 40));
 
-        // Panel Kontainer untuk Search
         JPanel leftHeaderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         leftHeaderPanel.setOpaque(false);
         leftHeaderPanel.add(searchInputWrapper);
 
-        // Language Buttons (ID / Eng)
+        // 2. Language Buttons
         JPanel langButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
         langButtonPanel.setOpaque(false);
         
@@ -106,29 +98,17 @@ public class DictionaryApp extends JFrame {
         idButton.setFont(buttonFont);
         engButton.setFont(buttonFont);
         
-        Color selectedBtnBg = new Color(150, 190, 255); 
-        Color defaultBtnBg = new Color(220, 220, 220);  
-        Color buttonTextColor = Color.BLACK;
+        Color selectedBtnBg = new Color(50, 120, 255); 
+        Color selectedBtnText = Color.WHITE;
+        Color defaultBtnBg = Color.WHITE;  
+        Color defaultBtnText = Color.BLACK;
         
-        // 🚨 Perbaikan: Padding dan Border Tombol (menggunakan EmptyBorder untuk Padding, LineBorder untuk Garis)
-        int btnPaddingV = 10;
+        int btnPaddingV = 8;
         int btnPaddingH = 20;
 
-        idButton.setBackground(selectedBtnBg);
-        idButton.setForeground(buttonTextColor);
-        idButton.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(150, 150, 150), 1), // Border Luar
-            BorderFactory.createEmptyBorder(btnPaddingV, btnPaddingH, btnPaddingV, btnPaddingH) // Padding
-        ));
-        idButton.setFocusPainted(false);
-
-        engButton.setBackground(defaultBtnBg);
-        engButton.setForeground(buttonTextColor);
-        engButton.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(150, 150, 150), 1),
-            BorderFactory.createEmptyBorder(btnPaddingV, btnPaddingH, btnPaddingV, btnPaddingH)
-        ));
-        engButton.setFocusPainted(false);
+        // Set default style (ID Selected)
+        styleButton(idButton, true, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
+        styleButton(engButton, false, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
 
         langButtonPanel.add(idButton);
         langButtonPanel.add(engButton);
@@ -142,114 +122,57 @@ public class DictionaryApp extends JFrame {
         contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBackground(Color.WHITE);
-        contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        contentPanel.setBorder(new EmptyBorder(20, 30, 20, 30));
 
         scrollPane = new JScrollPane(contentPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder()); 
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         
         styleScrollBar(scrollPane.getVerticalScrollBar()); 
 
         add(scrollPane, BorderLayout.CENTER);
 
         // --- Action Listeners ---
+        // Satu method sentral untuk menangani event pencarian
         ActionListener generalSearchAction = e -> performGlobalSearch();
+        
         searchField.addActionListener(generalSearchAction);
         searchIcon.addActionListener(generalSearchAction);
+
+        // Real-time search saat mengetik
         searchField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                performGlobalSearch();
-            }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                performGlobalSearch();
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                performGlobalSearch();
-            }
+            public void insertUpdate(DocumentEvent e) { performGlobalSearch(); }
+            public void removeUpdate(DocumentEvent e) { performGlobalSearch(); }
+            public void changedUpdate(DocumentEvent e) { performGlobalSearch(); }
         });
 
-        // Listener tombol ID
+        // Button Switch Logic
         idButton.addActionListener(e -> {
             currentLanguage = "ID";
-            // Update styling
-            idButton.setBackground(selectedBtnBg);
-            idButton.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(selectedBtnBg.darker(), 2), BorderFactory.createEmptyBorder(btnPaddingV, btnPaddingH, btnPaddingV, btnPaddingH)));
-            engButton.setBackground(defaultBtnBg);
-            engButton.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1), BorderFactory.createEmptyBorder(btnPaddingV, btnPaddingH, btnPaddingV, btnPaddingH)));
-            filterAndDisplayWords(searchField.getText().equals("Pencarian Teks") ? "" : searchField.getText());
+            styleButton(idButton, true, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
+            styleButton(engButton, false, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
+            performGlobalSearch(); // Refresh list
         });
 
-        // Listener tombol Eng
         engButton.addActionListener(e -> {
             currentLanguage = "Eng";
-            // Update styling
-            engButton.setBackground(selectedBtnBg);
-            engButton.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(selectedBtnBg.darker(), 2), BorderFactory.createEmptyBorder(btnPaddingV, btnPaddingH, btnPaddingV, btnPaddingH)));
-            idButton.setBackground(defaultBtnBg);
-            idButton.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1), BorderFactory.createEmptyBorder(btnPaddingV, btnPaddingH, btnPaddingV, btnPaddingH)));
-            filterAndDisplayWords(searchField.getText().equals("Pencarian Teks") ? "" : searchField.getText());
+            styleButton(engButton, true, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
+            styleButton(idButton, false, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
+            performGlobalSearch(); // Refresh list
         });
 
+        // Tampilkan data awal
         filterAndDisplayWords(""); 
         setVisible(true);
     }
     
-    // Metode untuk membuat ikon kaca pembesar sederhana
-    private Image createSearchIcon(int width, int height) {
-        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = img.createGraphics();
-        g2.setColor(new Color(100, 100, 100));
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setStroke(new BasicStroke(2));
-        
-        g2.drawOval(1, 1, width - 6, height - 6);
-        g2.drawLine(width - 5, height - 5, width - 1, height - 1);
-        
-        g2.dispose();
-        return img;
-    }
-    
-    // Metode untuk membuat ScrollBar minimalis dan cepat
-    private void styleScrollBar(JScrollBar bar) {
-        bar.setPreferredSize(new Dimension(8, bar.getPreferredSize().height));
-        bar.setUnitIncrement(50); 
-
-        bar.setUI(new BasicScrollBarUI() {
-            @Override
-            protected void configureScrollBarColors() {
-                this.thumbColor = new Color(150, 150, 150);
-                this.trackColor = Color.WHITE;
-            }
-            
-            @Override
-            protected JButton createDecreaseButton(int orientation) {
-                return createZeroSizeButton();
-            }
-
-            @Override
-            protected JButton createIncreaseButton(int orientation) {
-                return createZeroSizeButton();
-            }
-            
-            private JButton createZeroSizeButton() {
-                JButton button = new JButton();
-                Dimension zeroDim = new Dimension(0, 0);
-                button.setPreferredSize(zeroDim);
-                button.setMinimumSize(zeroDim);
-                button.setMaximumSize(zeroDim);
-                return button;
-            }
-        });
-    }
+    // Method sentral untuk menangani logika pencarian dan placeholder
     private void performGlobalSearch() {
         String text = searchField.getText();
         
-        // Logika: Jika teksnya "Pencarian Teks" DAN warnanya ABU-ABU,
-        // anggap user belum mengetik apa-apa (kosong).
+        // Jika masih berupa placeholder, anggap pencarian kosong (tampilkan semua)
         if (text.equals("Pencarian Teks") && searchField.getForeground() == Color.GRAY) {
             filterAndDisplayWords(""); 
         } else {
@@ -257,158 +180,249 @@ public class DictionaryApp extends JFrame {
         }
     }
 
+    // --- LOGIKA UTAMA: FILTERING & GROUPING ---
     private void filterAndDisplayWords(String query) {
         contentPanel.removeAll(); 
-
         String cleanQuery = query.trim().toLowerCase();
+        
         List<DictionaryEntry> allEntries = dictionaryManager.getAllSortedEntries();
-        
-        if (currentLanguage.equals("Eng")) {
-            allEntries = allEntries.stream()
-                .sorted((e1, e2) -> e1.getEngWord().compareToIgnoreCase(e2.getEngWord()))
-                .collect(Collectors.toList());
-        }
-        
-        Map<Character, List<DictionaryEntry>> groupedEntries = new LinkedHashMap<>();
 
-        for (DictionaryEntry entry : allEntries) {
-            String targetWord = currentLanguage.equals("ID") ? entry.getIndoWord() : entry.getEngWord();
+        if (currentLanguage.equals("ID")) {
+            // --- MODE INDONESIA (GROUPING AKTIF) ---
             
-            if (!query.isEmpty() && !targetWord.toLowerCase().contains(cleanQuery)) {
-                continue;
+            // 1. Urutkan berdasarkan kata Indonesia (A-Z)
+            allEntries.sort((e1, e2) -> e1.getIndoWord().compareToIgnoreCase(e2.getIndoWord()));
+
+            // 2. Grouping (Pengelompokan)
+            // Menggunakan LinkedHashMap agar urutan abjad tetap terjaga
+            // Key: Kata Indo (misal "Bisa"), Value: List berisi [Bisa-Can, Bisa-Venom]
+            Map<String, List<DictionaryEntry>> groupedData = new LinkedHashMap<>();
+
+            for (DictionaryEntry entry : allEntries) {
+                // Filter pencarian berdasarkan kata Indo
+                if (!query.isEmpty() && !entry.getIndoWord().toLowerCase().contains(cleanQuery)) {
+                    continue; // Skip jika tidak cocok dengan pencarian
+                }
+                
+                // Masukkan ke dalam map (Jika belum ada buat list baru, jika ada tambahkan ke list)
+                groupedData.computeIfAbsent(entry.getIndoWord(), k -> new ArrayList<>()).add(entry);
             }
 
-            if (!targetWord.isEmpty()) {
-                char firstChar = Character.toUpperCase(targetWord.charAt(0));
-                groupedEntries.computeIfAbsent(firstChar, k -> new ArrayList<>()).add(entry);
-            }
-        }
-        
-        for (Map.Entry<Character, List<DictionaryEntry>> entryGroup : groupedEntries.entrySet()) {
-            JLabel alphaHeader = new JLabel(String.valueOf(entryGroup.getKey()));
-            alphaHeader.setFont(new Font("Segoe UI", Font.BOLD, 22));
-            alphaHeader.setBorder(new EmptyBorder(15, 0, 5, 0));
-            alphaHeader.setAlignmentX(Component.LEFT_ALIGNMENT);
-            contentPanel.add(alphaHeader);
+            // 3. Tampilkan Data Terkelompok (Merged Cards)
+            char lastChar = '\0';
             
-            JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-            separator.setForeground(new Color(200, 200, 200));
-            separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
-            separator.setAlignmentX(Component.LEFT_ALIGNMENT);
-            contentPanel.add(separator);
-            contentPanel.add(Box.createVerticalStrut(10));
+            // Loop map-nya, bukan list aslinya (agar tidak ada duplikat kata Indo)
+            for (Map.Entry<String, List<DictionaryEntry>> group : groupedData.entrySet()) {
+                String indoWord = group.getKey();
+                List<DictionaryEntry> meanings = group.getValue();
+                
+                // Cek Header Huruf (A, B, C...)
+                char currentChar = Character.toUpperCase(indoWord.charAt(0));
+                if (currentChar != lastChar) {
+                    addHeaderLabel(currentChar);
+                    lastChar = currentChar;
+                }
 
-            for (DictionaryEntry entry : entryGroup.getValue()) {
-                contentPanel.add(createWordCard(entry));
-                contentPanel.add(Box.createVerticalStrut(8));
+                // Buat 1 Kartu Gabungan untuk 1 Kata Indonesia
+                contentPanel.add(createMergedCard(meanings));
+                contentPanel.add(Box.createVerticalStrut(10));
             }
-            contentPanel.add(Box.createVerticalStrut(20));
+
+        } else {
+            // --- MODE INGGRIS (TIDAK ADA GROUPING / NORMAL) ---
+            
+            // Urutkan berdasarkan Inggris
+            allEntries.sort((e1, e2) -> e1.getEngWord().compareToIgnoreCase(e2.getEngWord()));
+            
+            char lastChar = '\0';
+            for (DictionaryEntry entry : allEntries) {
+                // Filter pencarian berdasarkan kata Eng
+                if (!query.isEmpty() && !entry.getEngWord().toLowerCase().contains(cleanQuery)) {
+                    continue;
+                }
+
+                char currentChar = Character.toUpperCase(entry.getEngWord().charAt(0));
+                if (currentChar != lastChar) {
+                    addHeaderLabel(currentChar);
+                    lastChar = currentChar;
+                }
+
+                // Buat Kartu Satuan (Single Card) karena kata Inggrisnya berbeda (Ash vs Cinder)
+                contentPanel.add(createSingleCard(entry));
+                contentPanel.add(Box.createVerticalStrut(10));
+            }
         }
         
         contentPanel.revalidate();
         contentPanel.repaint();
     }
 
-    private JPanel createWordCard(DictionaryEntry entry) {
+    private void addHeaderLabel(char letter) {
+        JLabel alphaHeader = new JLabel(String.valueOf(letter));
+        alphaHeader.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        alphaHeader.setForeground(new Color(50, 50, 50));
+        alphaHeader.setBorder(new EmptyBorder(15, 0, 5, 0));
+        alphaHeader.setAlignmentX(Component.LEFT_ALIGNMENT);
+        contentPanel.add(alphaHeader);
+        
+        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+        separator.setForeground(new Color(220, 220, 220));
+        separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+        separator.setAlignmentX(Component.LEFT_ALIGNMENT);
+        contentPanel.add(separator);
+        contentPanel.add(Box.createVerticalStrut(10));
+    }
+
+    // Kartu Mode Inggris (Sederhana)
+    private JPanel createSingleCard(DictionaryEntry entry) {
+        return createBaseCard(entry.getEngWord(), entry.getIndoWord(), "Contoh: " + entry.getExample());
+    }
+
+    // Kartu Mode Indonesia (Gabungan Banyak Arti)
+    private JPanel createMergedCard(List<DictionaryEntry> entries) {
+        if (entries.isEmpty()) return new JPanel();
+
+        // 1. Judul Utama (Kata Indo) - Ambil dari elemen pertama saja (karena sama semua)
+        String mainWord = entries.get(0).getIndoWord(); 
+
+        // 2. Sub Judul (Kumpulan kata Inggris)
+        // Gabungkan semua arti Inggris dengan koma. Contoh: "Ash, Cinder"
+        String subWord = entries.stream()
+                .map(DictionaryEntry::getEngWord)
+                .collect(Collectors.joining(", "));
+
+        // 3. Contoh Kalimat
+        // Jika arti lebih dari 1, buat penomoran agar jelas
+        StringBuilder examples = new StringBuilder("<html>");
+        if (entries.size() > 1) {
+            for (int i = 0; i < entries.size(); i++) {
+                DictionaryEntry e = entries.get(i);
+                // Format: 1. (Ash) Gunung mengeluarkan abu...
+                examples.append("<b>").append(i + 1).append(". (").append(e.getEngWord()).append(")</b> ")
+                        .append(e.getExample()).append("<br/>"); // <br/> untuk baris baru HTML
+            }
+        } else {
+            // Jika cuma 1 arti, tampilkan biasa
+            examples.append(entries.get(0).getExample());
+        }
+        examples.append("</html>");
+
+        return createBaseCard(mainWord, subWord, examples.toString());
+    }
+
+    // Template Desain Kartu (Agar Konsisten)
+    private JPanel createBaseCard(String title, String subtitle, String footer) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBackground(new Color(245, 245, 245));
-        card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(220, 220, 220)),
-            BorderFactory.createEmptyBorder(10, 15, 10, 15)
-        ));
-        card.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        JLabel primaryWordLabel;
-        JLabel secondaryWordLabel;
-
-        if (currentLanguage.equals("ID")) {
-            primaryWordLabel = new JLabel(entry.getIndoWord());
-            secondaryWordLabel = new JLabel(entry.getEngWord());
-            primaryWordLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
-            secondaryWordLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
-        } else {
-            primaryWordLabel = new JLabel(entry.getEngWord());
-            secondaryWordLabel = new JLabel(entry.getIndoWord());
-            primaryWordLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
-            secondaryWordLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        }
+        card.setBackground(new Color(250, 250, 250));
         
-        primaryWordLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        card.add(primaryWordLabel);
+        // Border Rounded & Padding
+        card.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(230, 230, 230), 1, true),
+            BorderFactory.createEmptyBorder(12, 15, 12, 15)
+        ));
+        
+        card.setAlignmentX(Component.LEFT_ALIGNMENT);
+        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1000)); // Lebar full, tinggi menyesuaikan isi
 
-        secondaryWordLabel.setForeground(Color.GRAY);
-        secondaryWordLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        card.add(secondaryWordLabel);
+        // Judul Besar (Kata Utama)
+        JLabel primaryLabel = new JLabel(title);
+        primaryLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        primaryLabel.setForeground(new Color(30, 30, 30));
+        primaryLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        // Judul Kecil (Terjemahan)
+        JLabel secondaryLabel = new JLabel(subtitle);
+        secondaryLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        secondaryLabel.setForeground(new Color(100, 149, 237)); // Warna Biru Cornflower
+        secondaryLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        card.add(Box.createVerticalStrut(5));
+        // Footer (Contoh Kalimat)
+        JLabel footerLabel = new JLabel(footer);
+        footerLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        footerLabel.setForeground(new Color(100, 100, 100)); // Warna abu gelap
+        footerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        footerLabel.setBorder(new EmptyBorder(8, 0, 0, 0)); // Jarak sedikit dari atas
 
-        JLabel exampleLabel = new JLabel("contoh : " + entry.getExample());
-        exampleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        exampleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        card.add(exampleLabel);
+        card.add(primaryLabel);
+        card.add(secondaryLabel);
+        card.add(Box.createVerticalStrut(5)); // Spacer kecil
+        card.add(footerLabel);
 
+        // Efek Hover Mouse (Interaktif)
         card.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                card.setBackground(new Color(230, 230, 230));
-                card.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                card.setBackground(new Color(240, 245, 255)); // Ubah warna background jadi biru muda
+                card.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(100, 149, 237), 1, true), // Border jadi biru
+                    BorderFactory.createEmptyBorder(12, 15, 12, 15)
+                ));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                card.setBackground(new Color(245, 245, 245));
-                card.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                card.setBackground(new Color(250, 250, 250)); // Kembali ke warna asal
+                card.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(230, 230, 230), 1, true),
+                    BorderFactory.createEmptyBorder(12, 15, 12, 15)
+                ));
             }
         });
 
         return card;
     }
 
-    // Kelas kustom untuk membuat border membulat (tetap dipertahankan untuk styling tombol dan search bar)
-    static class RoundedBorder implements javax.swing.border.Border {
-        private final int radius;
-        private final Color color;
-        private final int thickness;
-        private final Insets insets;
-
-        RoundedBorder(Color color, int thickness, int radius) {
-            this.color = color;
-            this.thickness = thickness;
-            this.radius = radius;
-            this.insets = new Insets(radius + thickness, radius + thickness, radius + thickness, radius + thickness);
+    // Helper: Style Tombol Bahasa
+    private void styleButton(JButton btn, boolean isSelected, Color bgSel, Color fgSel, Color bgDef, Color fgDef, int pv, int ph) {
+        if (isSelected) {
+            btn.setBackground(bgSel);
+            btn.setForeground(fgSel);
+            btn.setBorder(BorderFactory.createEmptyBorder(pv, ph, pv, ph));
+        } else {
+            btn.setBackground(bgDef);
+            btn.setForeground(fgDef);
+            btn.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                BorderFactory.createEmptyBorder(pv-1, ph-1, pv-1, ph-1)
+            ));
         }
+        btn.setFocusPainted(false);
+    }
 
-        RoundedBorder(Color color, int thickness, int radius, int top, int left, int bottom, int right) {
-            this.color = color;
-            this.thickness = thickness;
-            this.radius = radius;
-            this.insets = new Insets(top, left, bottom, right);
-        }
+    // Helper: Gambar Ikon Search
+    private Image createSearchIcon(int width, int height) {
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = img.createGraphics();
+        g2.setColor(new Color(150, 150, 150));
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setStroke(new BasicStroke(2));
+        g2.drawOval(1, 1, width - 6, height - 6);
+        g2.drawLine(width - 5, height - 5, width - 1, height - 1);
+        g2.dispose();
+        return img;
+    }
 
-        public Insets getBorderInsets(Component c) {
-            return insets;
-        }
-
-        public boolean isBorderOpaque() {
-            return true;
-        }
-
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(color);
-            g2.setStroke(new BasicStroke(thickness));
-            g2.drawRoundRect(x + thickness / 2, y + thickness / 2, width - thickness, height - thickness, radius, radius);
-            g2.dispose();
-        }
+    // Helper: Style Scrollbar (Minimalis)
+    private void styleScrollBar(JScrollBar bar) {
+        bar.setPreferredSize(new Dimension(8, bar.getPreferredSize().height));
+        bar.setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new Color(200, 200, 200);
+                this.trackColor = Color.WHITE;
+            }
+            @Override
+            protected JButton createDecreaseButton(int orientation) { return createZeroButton(); }
+            @Override
+            protected JButton createIncreaseButton(int orientation) { return createZeroButton(); }
+            private JButton createZeroButton() {
+                JButton btn = new JButton();
+                btn.setPreferredSize(new Dimension(0, 0));
+                return btn;
+            }
+        });
     }
 
     public static void main(String[] args) {
-        try {
-            // Menggunakan Look and Feel Sistem Operasi untuk stabilitas.
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            // Fallback
-        }
-        
+        try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception e) {}
         SwingUtilities.invokeLater(DictionaryApp::new);
     }
 }
