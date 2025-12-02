@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 import java.awt.image.BufferedImage;
-import java.awt.RenderingHints;
 import java.util.ArrayList;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class DictionaryApp extends JFrame {
     private final DictionaryManager dictionaryManager;
@@ -156,7 +157,31 @@ public class DictionaryApp extends JFrame {
         ActionListener generalSearchAction = e -> filterAndDisplayWords(searchField.getText());
         searchField.addActionListener(generalSearchAction);
         searchIcon.addActionListener(generalSearchAction);
-        
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                performSearch();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                performSearch();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                performSearch();
+            }
+
+            private void performSearch() {
+                String text = searchField.getText();
+                // Cek agar Placeholder "Pencarian Teks" tidak dianggap sebagai kata kunci pencarian
+                if (text.equals("Pencarian Teks") && searchField.getForeground() == Color.GRAY) {
+                    filterAndDisplayWords("");
+                } else {
+                    filterAndDisplayWords(text);
+                }
+            }
+        });
+
         // Listener tombol ID
         idButton.addActionListener(e -> {
             currentLanguage = "ID";
