@@ -4,12 +4,12 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 2,abu,cinder,Meja itu penuh dengan abu rokok.
 3,abu,dust,Meja itu penuh dengan abu rokok.
 4,adopsi,adoption,Mereka memutuskan untuk melakukan adopsi anak.
-5,aduh,oh god,"Aduh, kakiku terbentur meja!"
-6,aduh,oh man,"Aduh, kakiku terbentur meja!"
-7,aduh,oh no,"Aduh, kakiku terbentur meja!"
-8,aduh,oof,"Aduh, kakiku terbentur meja!"
-9,aduh,ouch,"Aduh, kakiku terbentur meja!"
-10,aduh,ow,"Aduh, kakiku terbentur meja!"
+5,aduh,oh god,Aduh, kakiku terbentur meja!
+6,aduh,oh man,Aduh, kakiku terbentur meja!
+7,aduh,oh no,Aduh, kakiku terbentur meja!
+8,aduh,oof,Aduh, kakiku terbentur meja!
+9,aduh,ouch,Aduh, kakiku terbentur meja!
+10,aduh,ow,Aduh, kakiku terbentur meja!
 11,aktif,active,Dia sangat aktif dalam organisasi sekolah.
 12,aktif,dynamic,Dia sangat aktif dalam organisasi sekolah.
 13,aktif,lively,Dia sangat aktif dalam organisasi sekolah.
@@ -70,14 +70,14 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 68,aneh,uncanny,Suara itu terdengar sangat aneh.
 69,aneh,unusual,Suara itu terdengar sangat aneh.
 70,aneh,weird,Suara itu terdengar sangat aneh.
-71,anehnya,abnormally,"Anehnya, dia tidak datang hari ini."
-72,anehnya,bizarrely,"Anehnya, dia tidak datang hari ini."
-73,anehnya,eccentricly,"Anehnya, dia tidak datang hari ini."
-74,anehnya,oddly,"Anehnya, dia tidak datang hari ini."
-75,anehnya,peculiarly,"Anehnya, dia tidak datang hari ini."
-76,anehnya,strangely,"Anehnya, dia tidak datang hari ini."
-77,anehnya,unusually,"Anehnya, dia tidak datang hari ini."
-78,anehnya,weirdly,"Anehnya, dia tidak datang hari ini."
+71,anehnya,abnormally,Anehnya, dia tidak datang hari ini.
+72,anehnya,bizarrely,Anehnya, dia tidak datang hari ini.
+73,anehnya,eccentricly,Anehnya, dia tidak datang hari ini.
+74,anehnya,oddly,Anehnya, dia tidak datang hari ini.
+75,anehnya,peculiarly,Anehnya, dia tidak datang hari ini.
+76,anehnya,strangely,Anehnya, dia tidak datang hari ini.
+77,anehnya,unusually,Anehnya, dia tidak datang hari ini.
+78,anehnya,weirdly,Anehnya, dia tidak datang hari ini.
 79,anggun,elegant,Dia terlihat sangat anggun dengan gaun itu.
 80,anggun,graceful,Dia terlihat sangat anggun dengan gaun itu.
 81,anggun,prim,Dia terlihat sangat anggun dengan gaun itu.
@@ -121,11 +121,11 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 119,bahagia,cheerful,Semoga kamu hidup bahagia selamanya.
 120,bahagia,content,Semoga kamu hidup bahagia selamanya.
 121,bahagia,happy,Semoga kamu hidup bahagia selamanya.
-122,bahaya,challenge,"Jangan bermain di jalan, itu bahaya."
-123,bahaya,danger,"Jangan bermain di jalan, itu bahaya."
-124,bahaya,harm,"Jangan bermain di jalan, itu bahaya."
-125,bahaya,hazard,"Jangan bermain di jalan, itu bahaya."
-126,bahaya,risk,"Jangan bermain di jalan, itu bahaya."
+122,bahaya,challenge,Jangan bermain di jalan, itu bahaya.
+123,bahaya,danger,Jangan bermain di jalan, itu bahaya.
+124,bahaya,harm,Jangan bermain di jalan, itu bahaya.
+125,bahaya,hazard,Jangan bermain di jalan, itu bahaya.
+126,bahaya,risk,Jangan bermain di jalan, itu bahaya.
 127,baik,decent,Dia adalah orang yang sangat baik.
 128,baik,good,Dia adalah orang yang sangat baik.
 129,baik,kind,Dia adalah orang yang sangat baik.
@@ -266,10 +266,10 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 264,bersama,together,Kita akan pergi ke sana bersama.
 265,bersama,together with,Kita akan pergi ke sana bersama.
 266,bersama,with,Kita akan pergi ke sana bersama.
-267,bersedih,grieve,"Jangan bersedih, semua akan baik-baik saja."
-268,bersedih,heartbroken,"Jangan bersedih, semua akan baik-baik saja."
-269,bersedih,mourn,"Jangan bersedih, semua akan baik-baik saja."
-270,bersedih,sad,"Jangan bersedih, semua akan baik-baik saja."
+267,bersedih,grieve,Jangan bersedih, semua akan baik-baik saja.
+268,bersedih,heartbroken,Jangan bersedih, semua akan baik-baik saja.
+269,bersedih,mourn,Jangan bersedih, semua akan baik-baik saja.
+270,bersedih,sad,Jangan bersedih, semua akan baik-baik saja.
 271,bersembunyi,hide,Kucing itu bersembunyi di bawah mobil.
 272,bersembunyi,hiding,Kucing itu bersembunyi di bawah mobil.
 273,bersembunyi,lurking,Kucing itu bersembunyi di bawah mobil.
@@ -550,10 +550,10 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 548,gampang,piece of cake,Soal ujian ini sangat gampang.
 549,gampang,simple,Soal ujian ini sangat gampang.
 550,gampang,straightforward,Soal ujian ini sangat gampang.
-551,ganggu,annoy,"Maaf, bolehkah saya ganggu sebentar?"
-552,ganggu,bother,"Maaf, bolehkah saya ganggu sebentar?"
-553,ganggu,disturb,"Maaf, bolehkah saya ganggu sebentar?"
-554,ganggu,mess with,"Maaf, bolehkah saya ganggu sebentar?"
+551,ganggu,annoy,Maaf, bolehkah saya ganggu sebentar?
+552,ganggu,bother,Maaf, bolehkah saya ganggu sebentar?
+553,ganggu,disturb,Maaf, bolehkah saya ganggu sebentar?
+554,ganggu,mess with,Maaf, bolehkah saya ganggu sebentar?
 555,gaya,fashion,Gaya rambutnya sangat unik.
 556,gaya,manner,Gaya rambutnya sangat unik.
 557,gaya,style,Gaya rambutnya sangat unik.
@@ -572,12 +572,12 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 570,gentar,quiver,Kami tidak gentar menghadapi musuh.
 571,gentar,scared,Kami tidak gentar menghadapi musuh.
 572,gentar,tremble,Kami tidak gentar menghadapi musuh.
-573,gertak,bluff,"Jangan takut, itu hanya gertak sambal."
-574,gertak,bully,"Jangan takut, itu hanya gertak sambal."
-575,gertak,intimidate,"Jangan takut, itu hanya gertak sambal."
-576,gertak,scare off,"Jangan takut, itu hanya gertak sambal."
-577,gertak,snarl,"Jangan takut, itu hanya gertak sambal."
-578,gertak,threaten,"Jangan takut, itu hanya gertak sambal."
+573,gertak,bluff,Jangan takut, itu hanya gertak sambal.
+574,gertak,bully,Jangan takut, itu hanya gertak sambal.
+575,gertak,intimidate,Jangan takut, itu hanya gertak sambal.
+576,gertak,scare off,Jangan takut, itu hanya gertak sambal.
+577,gertak,snarl,Jangan takut, itu hanya gertak sambal.
+578,gertak,threaten,Jangan takut, itu hanya gertak sambal.
 579,gila,bonkers,Orang itu tertawa sendiri seperti orang gila.
 580,gila,crazy,Orang itu tertawa sendiri seperti orang gila.
 581,gila,insane,Orang itu tertawa sendiri seperti orang gila.
@@ -801,8 +801,8 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 799,kalah,lose,Tim kami kalah dalam pertandingan.
 800,kalah,lost,Tim kami kalah dalam pertandingan.
 801,kalah,owned,Tim kami kalah dalam pertandingan.
-802,kalimat,clause,"Buatlah kalimat dengan kata ""budi""."
-803,kalimat,sentence,"Buatlah kalimat dengan kata ""budi""."
+802,kalimat,clause,Buatlah kalimat dengan kata budi.
+803,kalimat,sentence,Buatlah kalimat dengan kata budi.
 804,kapal,ark,Kapal feri menyeberangi selat.
 805,kapal,boat,Kapal feri menyeberangi selat.
 806,kapal,canoe,Kapal feri menyeberangi selat.
@@ -996,12 +996,12 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 994,kerusakan,damage,Gempa menyebabkan kerusakan parah.
 995,kerusakan,decay,Gempa menyebabkan kerusakan parah.
 996,kerusakan,harm,Gempa menyebabkan kerusakan parah.
-997,kesalahan,error,"Maaf, itu adalah kesalahan saya."
-998,kesalahan,failure,"Maaf, itu adalah kesalahan saya."
-999,kesalahan,fault,"Maaf, itu adalah kesalahan saya."
-1000,kesalahan,guilt,"Maaf, itu adalah kesalahan saya."
-1001,kesalahan,mistake,"Maaf, itu adalah kesalahan saya."
-1002,kesalahan,wrongdoing,"Maaf, itu adalah kesalahan saya."
+997,kesalahan,error,Maaf, itu adalah kesalahan saya.
+998,kesalahan,failure,Maaf, itu adalah kesalahan saya.
+999,kesalahan,fault,Maaf, itu adalah kesalahan saya.
+1000,kesalahan,guilt,Maaf, itu adalah kesalahan saya.
+1001,kesalahan,mistake,Maaf, itu adalah kesalahan saya.
+1002,kesalahan,wrongdoing,Maaf, itu adalah kesalahan saya.
 1003,kesan,image,Pertemuan ini meninggalkan kesan mendalam.
 1004,kesan,impression,Pertemuan ini meninggalkan kesan mendalam.
 1005,kesempatan,avenue,Jangan sia-siakan kesempatan ini.
@@ -1013,16 +1013,16 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 1011,kesepian,lonely,Nenek merasa kesepian di rumah besar itu.
 1012,kesepian,lonesome,Nenek merasa kesepian di rumah besar itu.
 1013,kesepian,solitude,Nenek merasa kesepian di rumah besar itu.
-1014,kesulitan,adversity,"Jika ada kesulitan, hubungi saya."
-1015,kesulitan,challenge,"Jika ada kesulitan, hubungi saya."
-1016,kesulitan,complication,"Jika ada kesulitan, hubungi saya."
-1017,kesulitan,difficulty,"Jika ada kesulitan, hubungi saya."
-1018,kesulitan,distress,"Jika ada kesulitan, hubungi saya."
-1019,kesulitan,hardship,"Jika ada kesulitan, hubungi saya."
-1020,kesulitan,impediment,"Jika ada kesulitan, hubungi saya."
-1021,kesulitan,issue,"Jika ada kesulitan, hubungi saya."
-1022,kesulitan,problem,"Jika ada kesulitan, hubungi saya."
-1023,kesulitan,trouble,"Jika ada kesulitan, hubungi saya."
+1014,kesulitan,adversity,Jika ada kesulitan, hubungi saya.
+1015,kesulitan,challenge,Jika ada kesulitan, hubungi saya.
+1016,kesulitan,complication,Jika ada kesulitan, hubungi saya.
+1017,kesulitan,difficulty,Jika ada kesulitan, hubungi saya.
+1018,kesulitan,distress,Jika ada kesulitan, hubungi saya.
+1019,kesulitan,hardship,Jika ada kesulitan, hubungi saya.
+1020,kesulitan,impediment,Jika ada kesulitan, hubungi saya.
+1021,kesulitan,issue,Jika ada kesulitan, hubungi saya.
+1022,kesulitan,problem,Jika ada kesulitan, hubungi saya.
+1023,kesulitan,trouble,Jika ada kesulitan, hubungi saya.
 1024,ketakutan,dread,Anak itu lari ketakutan.
 1025,ketakutan,fear,Anak itu lari ketakutan.
 1026,ketakutan,fright,Anak itu lari ketakutan.
@@ -1156,17 +1156,17 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 1154,lenyap,extinct,Pesawat itu lenyap dari radar.
 1155,lenyap,gone,Pesawat itu lenyap dari radar.
 1156,lenyap,vanish,Pesawat itu lenyap dari radar.
-1157,lewat,come by,"Minggir, saya mau lewat."
-1158,lewat,come through,"Minggir, saya mau lewat."
-1159,lewat,go by,"Minggir, saya mau lewat."
-1160,lewat,go past,"Minggir, saya mau lewat."
-1161,lewat,late,"Minggir, saya mau lewat."
-1162,lewat,miss,"Minggir, saya mau lewat."
-1163,lewat,pass,"Minggir, saya mau lewat."
-1164,lewat,pass through,"Minggir, saya mau lewat."
-1165,lewat,passing,"Minggir, saya mau lewat."
-1166,lewat,slip by,"Minggir, saya mau lewat."
-1167,lewat,through,"Minggir, saya mau lewat."
+1157,lewat,come by,Minggir, saya mau lewat.
+1158,lewat,come through,Minggir, saya mau lewat.
+1159,lewat,go by,Minggir, saya mau lewat.
+1160,lewat,go past,Minggir, saya mau lewat.
+1161,lewat,late,Minggir, saya mau lewat.
+1162,lewat,miss,Minggir, saya mau lewat.
+1163,lewat,pass,Minggir, saya mau lewat.
+1164,lewat,pass through,Minggir, saya mau lewat.
+1165,lewat,passing,Minggir, saya mau lewat.
+1166,lewat,slip by,Minggir, saya mau lewat.
+1167,lewat,through,Minggir, saya mau lewat.
 1168,lihat,look,Coba lihat gambar ini.
 1169,lihat,observe,Coba lihat gambar ini.
 1170,lihat,see,Coba lihat gambar ini.
@@ -1200,10 +1200,10 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 1198,luka,wound,Luka di kakinya sudah kering.
 1199,luka,wounded,Luka di kakinya sudah kering.
 1200,lupa,forget,Saya lupa membawa payung.
-1201,maaf,excuse,"Maaf, saya datang terlambat."
-1202,maaf,forgive,"Maaf, saya datang terlambat."
-1203,maaf,pardon,"Maaf, saya datang terlambat."
-1204,maaf,sorry,"Maaf, saya datang terlambat."
+1201,maaf,excuse,Maaf, saya datang terlambat.
+1202,maaf,forgive,Maaf, saya datang terlambat.
+1203,maaf,pardon,Maaf, saya datang terlambat.
+1204,maaf,sorry,Maaf, saya datang terlambat.
 1205,mahal,costly,Tas ini harganya sangat mahal.
 1206,mahal,expensive,Tas ini harganya sangat mahal.
 1207,mahal,extravagant,Tas ini harganya sangat mahal.
@@ -1217,16 +1217,16 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 1215,mampu,capable,Dia mampu berlari sejauh 10 km.
 1216,mampu,competent,Dia mampu berlari sejauh 10 km.
 1217,mampu,well-off,Dia mampu berlari sejauh 10 km.
-1218,marah,angry,"Jangan marah, saya cuma bercanda."
-1219,marah,enraged,"Jangan marah, saya cuma bercanda."
-1220,marah,exasperated,"Jangan marah, saya cuma bercanda."
-1221,marah,furious,"Jangan marah, saya cuma bercanda."
-1222,marah,irate,"Jangan marah, saya cuma bercanda."
-1223,marah,mad,"Jangan marah, saya cuma bercanda."
-1224,marah,outraged,"Jangan marah, saya cuma bercanda."
-1225,marah,resentful,"Jangan marah, saya cuma bercanda."
-1226,marah,seethe,"Jangan marah, saya cuma bercanda."
-1227,marah,upset,"Jangan marah, saya cuma bercanda."
+1218,marah,angry,Jangan marah, saya cuma bercanda.
+1219,marah,enraged,Jangan marah, saya cuma bercanda.
+1220,marah,exasperated,Jangan marah, saya cuma bercanda.
+1221,marah,furious,Jangan marah, saya cuma bercanda.
+1222,marah,irate,Jangan marah, saya cuma bercanda.
+1223,marah,mad,Jangan marah, saya cuma bercanda.
+1224,marah,outraged,Jangan marah, saya cuma bercanda.
+1225,marah,resentful,Jangan marah, saya cuma bercanda.
+1226,marah,seethe,Jangan marah, saya cuma bercanda.
+1227,marah,upset,Jangan marah, saya cuma bercanda.
 1228,masalah,issue,Setiap masalah pasti ada solusinya.
 1229,masalah,matter,Setiap masalah pasti ada solusinya.
 1230,masalah,problem,Setiap masalah pasti ada solusinya.
@@ -1646,10 +1646,10 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 1644,nilai,score,Nilai matematikanya sangat bagus.
 1645,nilai,value,Nilai matematikanya sangat bagus.
 1646,nilai,worth,Nilai matematikanya sangat bagus.
-1647,oke,good,"Oke, saya setuju."
-1648,oke,ok,"Oke, saya setuju."
-1649,oke,okay,"Oke, saya setuju."
-1650,oke,okey dokey,"Oke, saya setuju."
+1647,oke,good,Oke, saya setuju.
+1648,oke,ok,Oke, saya setuju.
+1649,oke,okay,Oke, saya setuju.
+1650,oke,okey dokey,Oke, saya setuju.
 1651,oleh,by,Buku ini ditulis oleh penulis terkenal.
 1652,orang bodoh,birdbrain,Hanya orang bodoh yang tidak mau belajar.
 1653,orang bodoh,doofus,Hanya orang bodoh yang tidak mau belajar.
@@ -1769,9 +1769,9 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 1767,pendukung,proponent,Para pendukung tim bersorak gembira.
 1768,pendukung,supporter,Para pendukung tim bersorak gembira.
 1769,penembakan,shooting,Terjadi insiden penembakan di sana.
-1770,pengecut,chicken,"Jangan jadi pengecut, hadapi masalahmu."
-1771,pengecut,coward,"Jangan jadi pengecut, hadapi masalahmu."
-1772,pengecut,sissy,"Jangan jadi pengecut, hadapi masalahmu."
+1770,pengecut,chicken,Jangan jadi pengecut, hadapi masalahmu.
+1771,pengecut,coward,Jangan jadi pengecut, hadapi masalahmu.
+1772,pengecut,sissy,Jangan jadi pengecut, hadapi masalahmu.
 1773,pengunjung,guest,Pengunjung museum sangat ramai.
 1774,pengunjung,visitor,Pengunjung museum sangat ramai.
 1775,penjara,big house,Penjahat itu dijebloskan ke penjara.
@@ -1971,11 +1971,11 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 1969,sangat,sorely,Dia sangat senang hari ini.
 1970,sangat,terribly,Dia sangat senang hari ini.
 1971,sangat,very,Dia sangat senang hari ini.
-1972,santai,chill,"Santai saja, jangan terburu-buru."
-1973,santai,lounge,"Santai saja, jangan terburu-buru."
-1974,santai,relax,"Santai saja, jangan terburu-buru."
-1975,santai,relaxed,"Santai saja, jangan terburu-buru."
-1976,santai,sit around,"Santai saja, jangan terburu-buru."
+1972,santai,chill,Santai saja, jangan terburu-buru.
+1973,santai,lounge,Santai saja, jangan terburu-buru.
+1974,santai,relax,Santai saja, jangan terburu-buru.
+1975,santai,relaxed,Santai saja, jangan terburu-buru.
+1976,santai,sit around,Santai saja, jangan terburu-buru.
 1977,sapa,greet,Jangan lupa sapa tetanggamu.
 1978,sapa,who,Jangan lupa sapa tetanggamu.
 1979,saran,advice,Terima kasih atas saran Anda.
@@ -2242,13 +2242,13 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 2240,tempur,battle,Pesawat tempur terbang rendah.
 2241,tempur,combat,Pesawat tempur terbang rendah.
 2242,tempur,war,Pesawat tempur terbang rendah.
-2243,tenang,calm,"Harap tenang, ujian sedang berlangsung."
-2244,tenang,chill,"Harap tenang, ujian sedang berlangsung."
-2245,tenang,cool,"Harap tenang, ujian sedang berlangsung."
-2246,tenang,peaceful,"Harap tenang, ujian sedang berlangsung."
-2247,tenang,quiet,"Harap tenang, ujian sedang berlangsung."
-2248,tenang,serene,"Harap tenang, ujian sedang berlangsung."
-2249,tenang,tranquil,"Harap tenang, ujian sedang berlangsung."
+2243,tenang,calm,Harap tenang, ujian sedang berlangsung.
+2244,tenang,chill,Harap tenang, ujian sedang berlangsung.
+2245,tenang,cool,Harap tenang, ujian sedang berlangsung.
+2246,tenang,peaceful,Harap tenang, ujian sedang berlangsung.
+2247,tenang,quiet,Harap tenang, ujian sedang berlangsung.
+2248,tenang,serene,Harap tenang, ujian sedang berlangsung.
+2249,tenang,tranquil,Harap tenang, ujian sedang berlangsung.
 2250,tenggelam,drown,Matahari mulai tenggelam.
 2251,tenggelam,drowned,Matahari mulai tenggelam.
 2252,tenggelam,go down,Matahari mulai tenggelam.
@@ -2423,19 +2423,19 @@ Unnamed: 0,indonesian,english,contoh_penggunaan
 2421,waspada,careful,Tetap waspada terhadap penipuan.
 2422,waspada,caution,Tetap waspada terhadap penipuan.
 2423,waspada,wary,Tetap waspada terhadap penipuan.
-2424,wow,whoa,"Wow, pemandangannya indah sekali!"
-2425,wow,whoo,"Wow, pemandangannya indah sekali!"
-2426,wow,wow,"Wow, pemandangannya indah sekali!"
-2427,ya,ay,"Ya, saya mengerti."
-2428,ya,aye,"Ya, saya mengerti."
-2429,ya,uh huh,"Ya, saya mengerti."
-2430,ya,yas,"Ya, saya mengerti."
-2431,ya,ye,"Ya, saya mengerti."
-2432,ya,yea,"Ya, saya mengerti."
-2433,ya,yeah,"Ya, saya mengerti."
-2434,ya,yep,"Ya, saya mengerti."
-2435,ya,yes,"Ya, saya mengerti."
-2436,ya,yup,"Ya, saya mengerti."
+2424,wow,whoa,Wow, pemandangannya indah sekali!
+2425,wow,whoo,Wow, pemandangannya indah sekali!
+2426,wow,wow,Wow, pemandangannya indah sekali!
+2427,ya,ay,Ya, saya mengerti.
+2428,ya,aye,Ya, saya mengerti.
+2429,ya,uh huh,Ya, saya mengerti.
+2430,ya,yas,Ya, saya mengerti.
+2431,ya,ye,Ya, saya mengerti.
+2432,ya,yea,Ya, saya mengerti.
+2433,ya,yeah,Ya, saya mengerti.
+2434,ya,yep,Ya, saya mengerti.
+2435,ya,yes,Ya, saya mengerti.
+2436,ya,yup,Ya, saya mengerti.
 2437,yakin,assured,Apakah kamu yakin dengan jawabanmu?
 2438,yakin,believe,Apakah kamu yakin dengan jawabanmu?
 2439,yakin,certain,Apakah kamu yakin dengan jawabanmu?
