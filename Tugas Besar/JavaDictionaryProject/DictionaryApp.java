@@ -13,9 +13,11 @@ import java.util.stream.Collectors;
 import java.awt.image.BufferedImage;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.io.File;
 
 public class DictionaryApp extends JFrame {
     private final DictionaryManager dictionaryManager;
+    private final DictionaryGimmick dictionaryGimmick;
     private JTextField searchField;
     private JPanel contentPanel;
     private JScrollPane scrollPane;
@@ -27,6 +29,7 @@ public class DictionaryApp extends JFrame {
     public DictionaryApp() {
         super("Kamus Indonesia-Inggris");
         dictionaryManager = new DictionaryManager();
+        dictionaryGimmick = new DictionaryGimmick();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(980, 700);
@@ -179,6 +182,12 @@ public class DictionaryApp extends JFrame {
         if (currentLanguage.equals("ID")) {
             // --- MODE ID (GROUPING) ---
             allEntries.sort((e1, e2) -> e1.getIndoWord().compareToIgnoreCase(e2.getIndoWord()));
+
+            boolean isGimmickExecuted = dictionaryGimmick.tryExecuteGimmick(cleanQuery, contentPanel);
+            
+            if (isGimmickExecuted) {
+                return;
+            }
 
             Map<String, List<DictionaryEntry>> groupedData = new LinkedHashMap<>();
 
