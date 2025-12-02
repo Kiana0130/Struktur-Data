@@ -30,7 +30,7 @@ public class DictionaryGimmick {
     public void execute(String actionCode, String word) {
         switch (actionCode) {
             case "HANTU_EFFECT":
-                displayImageGimmick("Hantu", word, "/Gimmick/Hantu.jpeg");
+                displayImageGimmick("Hantu", word, "Gimmick/Hantu.jpeg");
                 break;
             case "FLIP_EFFECT":
                 simulateFlipEffect();
@@ -67,9 +67,9 @@ public class DictionaryGimmick {
         String lowercaseWord = word.toLowerCase();
 
         if (lowercaseWord.contains("mobil listrik")) {
-            file = "/Gimmick/MobilListrik.jpeg";
+            file = "Gimmick/Mobil listrik.mp4";
         } else if (lowercaseWord.contains("motor listrik")) {
-            file = "/Gimmick/MotorListrik.jpeg";
+            file = "Gimmick/Motor listrik.mp4";
         } else if (lowercaseWord.contains("mobil") || lowercaseWord.contains("car")) {
             file = "/Gimmick/Mobil.jpeg";
         } else if (lowercaseWord.contains("motor") || lowercaseWord.contains("motorcycle")) {
@@ -84,8 +84,9 @@ public class DictionaryGimmick {
     }
 
     private void displayImageGimmick(String title, String word, String imagePath) {
-        JDialog imageDialog = new JDialog(mainFrame, "Easter Egg: " + title, true);
-        imageDialog.setSize(600, 400); 
+        JDialog imageDialog = new JDialog(mainFrame, "Easter Egg: " + title);
+        imageDialog.setModalityType(Dialog.ModalityType.MODELESS);
+        imageDialog.setSize(920, 700); 
         imageDialog.setLocationRelativeTo(mainFrame);
         imageDialog.setUndecorated(true); 
 
@@ -119,7 +120,7 @@ public class DictionaryGimmick {
         imageDialog.add(imageLabel, BorderLayout.CENTER);
         imageDialog.setVisible(true);
 
-        Timer timer = new Timer(1500, new ActionListener() {
+        Timer timer = new Timer(2500, new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 imageDialog.dispose(); 
@@ -133,7 +134,7 @@ public class DictionaryGimmick {
     // GIMMICK 4: Hilang (Vanish)
     private void simulateVanishEffect() {
         mainFrame.setVisible(false);
-        new Timer(500, e -> {
+        new Timer(5000, e -> {
             mainFrame.setVisible(true);
             ((Timer)e.getSource()).stop();
         }).start();
