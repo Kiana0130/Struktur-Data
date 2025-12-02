@@ -1,10 +1,10 @@
 package JavaDictionaryProject;
 
-import java.util.HashMap;
-import java.util.TreeMap;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 // import java.io.BufferedReader;
 // import java.io.FileReader;
 // import java.io.IOException;
@@ -12,13 +12,43 @@ import java.util.ArrayList;
 public class DictionaryManager {
     private final Map<String, List<DictionaryEntry>> wordMap;
     private final TreeMap<String, List<DictionaryEntry>> sortedWords;
+    private final Map<String, String> gimmickActions;
     
     // private static final String CSV_FILE = "Struktur-Data/Tugas Besar/JavaDictionaryProject/indo-english-complete.csv"; 
 
     public DictionaryManager() {
         this.wordMap = new HashMap<>();
         this.sortedWords = new TreeMap<>();
+        this.gimmickActions = new HashMap<>();
         loadInitialData();
+        loadGimmickData();
+    }
+
+    public String getGimmickAction(String word) {
+        if (word == null) return null;
+        return gimmickActions.get(word.toLowerCase());
+    }
+
+    private void  loadGimmickData() {
+        gimmickActions.put("hantu", "HANTU_EFFECT");
+        gimmickActions.put("ghost", "HANTU_EFFECT");
+        gimmickActions.put("flip", "FLIP_EFFECT");
+        gimmickActions.put("hilang", "VANISH_EFFECT");
+        gimmickActions.put("missing", "VANISH_EFFECT");
+        gimmickActions.put("kalkulator", "CALCULATOR_APP");
+        gimmickActions.put("calculator", "CALCULATOR_APP");
+        gimmickActions.put("merah", "COLOR_RED");
+        gimmickActions.put("kuning", "COLOR_YELLOW");
+        gimmickActions.put("hijau", "COLOR_GREEN");
+        gimmickActions.put("biru", "COLOR_BLUE");
+        gimmickActions.put("mobil", "VEHICLE_INFO");
+        gimmickActions.put("motor", "VEHICLE_INFO");
+        gimmickActions.put("mobil listrik", "VEHICLE_INFO");
+        gimmickActions.put("motor listrik", "VEHICLE_INFO");
+        gimmickActions.put("car", "VEHICLE_INFO");
+        gimmickActions.put("motorcycle", "VEHICLE_INFO");
+        gimmickActions.put("electric car", "VEHICLE_INFO");
+        gimmickActions.put("electric motorcyle", "VEHICLE_INFO");
     }
 
     public void addEntry(String indo, String eng, String example) {

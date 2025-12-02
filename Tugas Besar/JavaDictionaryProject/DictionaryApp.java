@@ -1,18 +1,18 @@
 package JavaDictionaryProject;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.LinkedHashMap;
-import java.util.stream.Collectors;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class DictionaryApp extends JFrame {
     private final DictionaryManager dictionaryManager;
@@ -21,7 +21,8 @@ public class DictionaryApp extends JFrame {
     private JScrollPane scrollPane;
     private JButton idButton;
     private JButton engButton;
-
+    private JPanel headerPanel;
+    private DictionaryGimmick dictionaryGimmick;
     private String currentLanguage = "ID";
 
     public DictionaryApp() {
@@ -38,9 +39,8 @@ public class DictionaryApp extends JFrame {
         Font buttonFont = new Font("Segoe UI", Font.BOLD, 14);
 
         // --- Header Panel ---
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(new Color(240, 240, 240)); 
-        headerPanel.setBorder(new EmptyBorder(15, 20, 15, 20));
+        headerPanel = new JPanel(new BorderLayout()); 
+        headerPanel.setBackground(new Color(240, 240, 240));
 
         // Search Field
         searchField = new JTextField("Pencarian Teks", 25);
@@ -49,19 +49,19 @@ public class DictionaryApp extends JFrame {
         searchField.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0)); 
 
         searchField.addFocusListener(new java.awt.event.FocusAdapter() {
-             public void focusGained(java.awt.event.FocusEvent evt) {
-                 if (searchField.getText().equals("Pencarian Teks")) {
-                     searchField.setText("");
-                     searchField.setForeground(Color.BLACK);
-                 }
-             }
-             public void focusLost(java.awt.event.FocusEvent evt) {
-                 if (searchField.getText().isEmpty()) {
-                     searchField.setText("Pencarian Teks");
-                     searchField.setForeground(Color.GRAY);
-                 }
-             }
-         });
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (searchField.getText().equals("Pencarian Teks")) {
+                    searchField.setText("");
+                    searchField.setForeground(Color.BLACK);
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (searchField.getText().isEmpty()) {
+                    searchField.setText("Pencarian Teks");
+                    searchField.setForeground(Color.GRAY);
+                }
+            }
+        });
         
         JButton searchIcon = new JButton(new ImageIcon(createSearchIcon(16, 16)));
         searchIcon.setBorderPainted(false);
@@ -158,12 +158,13 @@ public class DictionaryApp extends JFrame {
         });
 
         filterAndDisplayWords(""); 
+        dictionaryGimmick = new DictionaryGimmick(this, headerPanel, contentPanel, scrollPane);
         setVisible(true);
     }
     
     private void performGlobalSearch() {
         String text = searchField.getText();
-        if (text.equals("Pencarian Teks") && searchField.getForeground() == Color.GRAY) {
+        if (text.equals("Pencarian Teks") || text.trim().isEmpty()) {
             filterAndDisplayWords(""); 
         } else {
             filterAndDisplayWords(text);
@@ -171,13 +172,31 @@ public class DictionaryApp extends JFrame {
     }
 
     private void filterAndDisplayWords(String query) {
-        contentPanel.removeAll(); 
         String cleanQuery = query.trim().toLowerCase();
+        
+        // --- LOGIKA GIMMICK YANG DIREVISI ---
+        String gimmickAction = null;
+        if (!cleanQuery.isEmpty()) {
+            gimmickAction = dictionaryManager.getGimmickAction(cleanQuery);
+        }
+
+        if (gimmickAction != null) {
+            // 1. Trigger the gimmick if found (e.g., "merah")
+            triggerGimmick(gimmickAction, query.trim());
+        } else {
+            // 2. Reset the color/gimmick if not found, or if query is empty
+            if (dictionaryGimmick != null) {
+                dictionaryGimmick.execute("COLOR_RESET", "");
+            }
+        }
+
+        contentPanel.removeAll(); 
+        
         
         List<DictionaryEntry> allEntries = dictionaryManager.getAllSortedEntries();
 
         if (currentLanguage.equals("ID")) {
-            // --- MODE ID (GROUPING) ---
+            
             allEntries.sort((e1, e2) -> e1.getIndoWord().compareToIgnoreCase(e2.getIndoWord()));
 
             Map<String, List<DictionaryEntry>> groupedData = new LinkedHashMap<>();
@@ -369,6 +388,12 @@ public class DictionaryApp extends JFrame {
                 return btn;
             }
         });
+    }
+
+    private void triggerGimmick(String actionCode, String word) {
+        if (dictionaryGimmick != null) {
+            dictionaryGimmick.execute(actionCode, word);
+        }
     }
 
     public static void main(String[] args) {
