@@ -42,6 +42,7 @@ public class DictionaryManager {
         idGimmicks.put("hilang", "VANISH_EFFECT");
         idGimmicks.put("kalkulator", "CALCULATOR_APP");
         idGimmicks.put("balik", "FLIP_EFFECT");
+        idGimmicks.put("hidup", "HIDUP_EFFECT");
         
         idGimmicks.put("merah", "COLOR_RED");
         idGimmicks.put("kuning", "COLOR_YELLOW");
@@ -56,13 +57,13 @@ public class DictionaryManager {
 
         idGimmicks.put("mobil", "VEHICLE_INFO");
         idGimmicks.put("motor", "VEHICLE_INFO");
-        idGimmicks.put("mobil listrik", "VEHICLE_INFO");
-        idGimmicks.put("motor listrik", "VEHICLE_INFO");
+
 
         engGimmicks.put("ghost", "HANTU_EFFECT");
         engGimmicks.put("flip", "FLIP_EFFECT");
         engGimmicks.put("missing", "VANISH_EFFECT");
         engGimmicks.put("calculator", "CALCULATOR_APP");
+        engGimmicks.put("alive", "HIDUP_EFFECT");
 
         engGimmicks.put("red", "COLOR_RED"); 
         engGimmicks.put("yellow", "COLOR_YELLOW");
@@ -78,8 +79,7 @@ public class DictionaryManager {
 
         engGimmicks.put("car", "VEHICLE_INFO");
         engGimmicks.put("motorcycle", "VEHICLE_INFO");
-        engGimmicks.put("electric car", "VEHICLE_INFO");
-        engGimmicks.put("electric motorcycle", "VEHICLE_INFO");
+
     }
 
     public void addEntry(String indo, String eng, String example) {
