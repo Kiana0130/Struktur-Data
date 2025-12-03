@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+import java.awt.geom.RoundRectangle2D;
 
 public class DictionaryApp extends JFrame {
     private final DictionaryManager dictionaryManager;
@@ -40,12 +41,16 @@ public class DictionaryApp extends JFrame {
 
         // --- Header Panel ---
         headerPanel = new JPanel(new BorderLayout()); 
-        headerPanel.setBackground(new Color(240, 240, 240));
+        Color themeBlue = new Color(0x2b5288);
+        headerPanel.setBackground(themeBlue);
+        headerPanel.setBorder(new EmptyBorder(15, 20, 15, 20));
 
         // Search Field
         searchField = new JTextField("Pencarian Teks", 25);
         searchField.setFont(searchFieldFont);
         searchField.setForeground(Color.GRAY);
+        searchField.setBorder(null);
+        searchField.setOpaque(false);
         searchField.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0)); 
 
         searchField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -69,43 +74,35 @@ public class DictionaryApp extends JFrame {
         searchIcon.setFocusPainted(false);
         searchIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JPanel searchInputWrapper = new JPanel(new BorderLayout());
-        searchInputWrapper.setBackground(Color.WHITE);
-        searchInputWrapper.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1)); 
-        
-        JPanel iconWrapper = new JPanel(new BorderLayout());
-        iconWrapper.setBackground(Color.WHITE);
-        iconWrapper.add(searchIcon, BorderLayout.CENTER);
-        iconWrapper.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 10)); 
-        iconWrapper.setPreferredSize(new Dimension(35, 35));
-
+        JPanel searchInputWrapper = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(Color.WHITE);
+                // Menggambar kotak putih dengan sudut melengkung (radius 30)
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+            }
+        };
+        searchInputWrapper.setOpaque(false); // Agar sudut transparan terlihat background biru header
+        searchInputWrapper.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 10)); // Padding dalam
         searchInputWrapper.add(searchField, BorderLayout.CENTER);
-        searchInputWrapper.add(iconWrapper, BorderLayout.EAST);
-        searchInputWrapper.setPreferredSize(new Dimension(350, 40));
+        searchInputWrapper.add(searchIcon, BorderLayout.EAST);
+        searchInputWrapper.setPreferredSize(new Dimension(400, 45));
 
         JPanel leftHeaderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         leftHeaderPanel.setOpaque(false);
         leftHeaderPanel.add(searchInputWrapper);
 
         // Language Buttons
-        JPanel langButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        JPanel langButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0)); // Jarak antar tombol 10
         langButtonPanel.setOpaque(false);
         
-        idButton = new JButton("ID");
-        engButton = new JButton("Eng");
+        idButton = new GradientButton("ID", themeBlue);
+        engButton = new GradientButton("Eng", themeBlue);
         idButton.setFont(buttonFont);
         engButton.setFont(buttonFont);
-        
-        Color selectedBtnBg = new Color(50, 120, 255); 
-        Color selectedBtnText = Color.WHITE;
-        Color defaultBtnBg = Color.WHITE;  
-        Color defaultBtnText = Color.BLACK;
-        
-        int btnPaddingV = 8;
-        int btnPaddingH = 20;
-
-        styleButton(idButton, true, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
-        styleButton(engButton, false, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
 
         langButtonPanel.add(idButton);
         langButtonPanel.add(engButton);
@@ -145,15 +142,11 @@ public class DictionaryApp extends JFrame {
 
         idButton.addActionListener(e -> {
             currentLanguage = "ID";
-            styleButton(idButton, true, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
-            styleButton(engButton, false, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
             performGlobalSearch();
         });
 
         engButton.addActionListener(e -> {
             currentLanguage = "Eng";
-            styleButton(engButton, true, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
-            styleButton(idButton, false, selectedBtnBg, selectedBtnText, defaultBtnBg, defaultBtnText, btnPaddingV, btnPaddingH);
             performGlobalSearch();
         });
 
@@ -342,21 +335,21 @@ public class DictionaryApp extends JFrame {
         return card;
     }
 
-    private void styleButton(JButton btn, boolean isSelected, Color bgSel, Color fgSel, Color bgDef, Color fgDef, int pv, int ph) {
-        if (isSelected) {
-            btn.setBackground(bgSel);
-            btn.setForeground(fgSel);
-            btn.setBorder(BorderFactory.createEmptyBorder(pv, ph, pv, ph));
-        } else {
-            btn.setBackground(bgDef);
-            btn.setForeground(fgDef);
-            btn.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
-                BorderFactory.createEmptyBorder(pv-1, ph-1, pv-1, ph-1)
-            ));
-        }
-        btn.setFocusPainted(false);
-    }
+    // private void styleButton(JButton btn, boolean isSelected, Color bgSel, Color fgSel, Color bgDef, Color fgDef, int pv, int ph) {
+    //     if (isSelected) {
+    //         btn.setBackground(bgSel);
+    //         btn.setForeground(fgSel);
+    //         btn.setBorder(BorderFactory.createEmptyBorder(pv, ph, pv, ph));
+    //     } else {
+    //         btn.setBackground(bgDef);
+    //         btn.setForeground(fgDef);
+    //         btn.setBorder(BorderFactory.createCompoundBorder(
+    //             BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+    //             BorderFactory.createEmptyBorder(pv-1, ph-1, pv-1, ph-1)
+    //         ));
+    //     }
+    //     btn.setFocusPainted(false);
+    // }
 
     private Image createSearchIcon(int width, int height) {
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -400,4 +393,47 @@ public class DictionaryApp extends JFrame {
         try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception e) {}
         SwingUtilities.invokeLater(DictionaryApp::new);
     }
+
+    private class GradientButton extends JButton {
+        private Color themeColor;
+
+        public GradientButton(String text, Color themeColor) {
+            super(text);
+            this.themeColor = themeColor;
+            setContentAreaFilled(false);
+            setFocusPainted(false);
+            setBorderPainted(false);
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+            setPreferredSize(new Dimension(80, 40)); // Ukuran tombol
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // 1. Gambar Shadow (Bayangan)
+            g2.setColor(new Color(0, 0, 0, 50)); // Hitam transparan
+            g2.fillRoundRect(3, 3, getWidth() - 6, getHeight() - 6, 20, 20);
+
+            // 2. Gambar Gradient Background (Putih ke Abu-abu)
+            // Jika ditekan, balik gradasinya biar ada efek 'klik'
+            Color startColor = getModel().isPressed() ? new Color(220, 220, 220) : Color.WHITE;
+            Color endColor = getModel().isPressed() ? Color.WHITE : new Color(230, 230, 230);
+            
+            GradientPaint gp = new GradientPaint(0, 0, startColor, 0, getHeight(), endColor);
+            g2.setPaint(gp);
+            g2.fillRoundRect(0, 0, getWidth() - 3, getHeight() - 3, 20, 20);
+
+            // 3. Gambar Text
+            g2.setColor(themeColor); // Warna text sesuai header (#2b5288)
+            FontMetrics fm = g2.getFontMetrics();
+            int x = (getWidth() - 3 - fm.stringWidth(getText())) / 2;
+            int y = ((getHeight() - 3 - fm.getHeight()) / 2) + fm.getAscent();
+            g2.drawString(getText(), x, y);
+
+            g2.dispose();
+        }
+    }
+
 }
