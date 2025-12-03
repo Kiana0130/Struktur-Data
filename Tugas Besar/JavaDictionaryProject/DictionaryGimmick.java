@@ -248,7 +248,7 @@ public class DictionaryGimmick {
     private void simulateFlipEffect() {
         if (isFlipped) return;
 
-       Container contentPane = mainFrame.getContentPane();
+    Container contentPane = mainFrame.getContentPane();
         BufferedImage image = new BufferedImage(contentPane.getWidth(), contentPane.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
         contentPane.print(g2d);
