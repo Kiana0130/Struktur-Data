@@ -10,7 +10,7 @@ import java.util.TreeMap;
 // import java.io.IOException;
 
 public class DictionaryManager {
-    private final Map<String, List<DictionaryEntry>> wordMap;
+    //private final Map<String, List<DictionaryEntry>> wordMap;
     private final TreeMap<String, List<DictionaryEntry>> sortedWords;
     private final Map<String, String> idGimmicks;
     private final Map<String, String> engGimmicks;
@@ -18,7 +18,7 @@ public class DictionaryManager {
     // private static final String CSV_FILE = "Struktur-Data/Tugas Besar/JavaDictionaryProject/indo-english-complete.csv"; 
 
     public DictionaryManager() {
-        this.wordMap = new HashMap<>();
+        //this.wordMap = new HashMap<>();
         this.sortedWords = new TreeMap<>();
         this.idGimmicks = new HashMap<>();
         this.engGimmicks = new HashMap<>();
@@ -42,6 +42,7 @@ public class DictionaryManager {
         idGimmicks.put("hilang", "VANISH_EFFECT");
         idGimmicks.put("kalkulator", "CALCULATOR_APP");
         idGimmicks.put("balik", "FLIP_EFFECT");
+        idGimmicks.put("hidup", "HIDUP_EFFECT");
         
         idGimmicks.put("merah", "COLOR_RED");
         idGimmicks.put("kuning", "COLOR_YELLOW");
@@ -56,13 +57,13 @@ public class DictionaryManager {
 
         idGimmicks.put("mobil", "VEHICLE_INFO");
         idGimmicks.put("motor", "VEHICLE_INFO");
-        idGimmicks.put("mobil listrik", "VEHICLE_INFO");
-        idGimmicks.put("motor listrik", "VEHICLE_INFO");
+
 
         engGimmicks.put("ghost", "HANTU_EFFECT");
         engGimmicks.put("flip", "FLIP_EFFECT");
         engGimmicks.put("missing", "VANISH_EFFECT");
         engGimmicks.put("calculator", "CALCULATOR_APP");
+        engGimmicks.put("alive", "HIDUP_EFFECT");
 
         engGimmicks.put("red", "COLOR_RED"); 
         engGimmicks.put("yellow", "COLOR_YELLOW");
@@ -78,24 +79,27 @@ public class DictionaryManager {
 
         engGimmicks.put("car", "VEHICLE_INFO");
         engGimmicks.put("motorcycle", "VEHICLE_INFO");
-        engGimmicks.put("electric car", "VEHICLE_INFO");
-        engGimmicks.put("electric motorcycle", "VEHICLE_INFO");
+
     }
 
     public void addEntry(String indo, String eng, String example) {
         DictionaryEntry entry = new DictionaryEntry(indo, eng, example);
         String key = indo.toLowerCase();
 
-        wordMap.putIfAbsent(key, new ArrayList<>());
+        //wordMap.putIfAbsent(key, new ArrayList<>());
         sortedWords.putIfAbsent(key, new ArrayList<>());
 
-        wordMap.get(key).add(entry);
+        //wordMap.get(key).add(entry);
         sortedWords.get(key).add(entry);
     }
 
-    public List<DictionaryEntry> search(String word) {
+    // public List<DictionaryEntry> search(String word) {
+    //     if (word == null) return null;
+    //     return wordMap.get(word.toLowerCase()); 
+    // }
+        public List<DictionaryEntry> search(String word) {
         if (word == null) return null;
-        return wordMap.get(word.toLowerCase()); 
+        return sortedWords.get(word.toLowerCase()); 
     }
 
     public List<DictionaryEntry> getAllSortedEntries() {
