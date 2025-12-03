@@ -20,8 +20,8 @@ public class DictionaryApp extends JFrame {
     private JTextField searchField;
     private JPanel contentPanel;
     private JScrollPane scrollPane;
-    private JButton idButton;
-    private JButton engButton;
+    private GradientButton idButton;
+    private GradientButton engButton;
     private JPanel headerPanel;
     private DictionaryGimmick dictionaryGimmick;
     private String currentLanguage = "ID";
@@ -107,6 +107,9 @@ public class DictionaryApp extends JFrame {
         langButtonPanel.add(idButton);
         langButtonPanel.add(engButton);
 
+        idButton.setActive(true);
+        engButton.setActive(false);
+
         headerPanel.add(leftHeaderPanel, BorderLayout.CENTER);
         headerPanel.add(langButtonPanel, BorderLayout.EAST);
 
@@ -142,11 +145,15 @@ public class DictionaryApp extends JFrame {
 
         idButton.addActionListener(e -> {
             currentLanguage = "ID";
+            idButton.setActive(true);
+            engButton.setActive(false);
             performGlobalSearch();
         });
 
         engButton.addActionListener(e -> {
             currentLanguage = "Eng";
+            engButton.setActive(true);
+            idButton.setActive(false);
             performGlobalSearch();
         });
 
@@ -388,6 +395,7 @@ public class DictionaryApp extends JFrame {
 
     private class GradientButton extends JButton {
         private Color themeColor;
+        private boolean isActive = false;
 
         public GradientButton(String text, Color themeColor) {
             super(text);
@@ -396,7 +404,12 @@ public class DictionaryApp extends JFrame {
             setFocusPainted(false);
             setBorderPainted(false);
             setCursor(new Cursor(Cursor.HAND_CURSOR));
-            setPreferredSize(new Dimension(80, 40)); // Ukuran tombol
+            setPreferredSize(new Dimension(80, 40));
+        }
+
+        public void setActive(boolean active) {
+            this.isActive = active;
+            repaint();
         }
 
         @Override
@@ -404,21 +417,41 @@ public class DictionaryApp extends JFrame {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // 1. Gambar Shadow (Bayangan)
-            g2.setColor(new Color(0, 0, 0, 50)); // Hitam transparan
+            // 1. Gambar Shadow (Bayangan) - sedikit lebih tipis
+            g2.setColor(new Color(0, 0, 0, 40));
             g2.fillRoundRect(3, 3, getWidth() - 6, getHeight() - 6, 20, 20);
 
-            // 2. Gambar Gradient Background (Putih ke Abu-abu)
-            // Jika ditekan, balik gradasinya biar ada efek 'klik'
-            Color startColor = getModel().isPressed() ? new Color(220, 220, 220) : Color.WHITE;
-            Color endColor = getModel().isPressed() ? Color.WHITE : new Color(230, 230, 230);
-            
+            // 2. Tentukan Warna Berdasarkan Status Active
+            Color startColor, endColor, textColor;
+
+            if (isActive) {
+                // MODE AKTIF: Background Biru (Tema), Teks Putih
+                startColor = themeColor.brighter(); // Sedikit lebih terang dari header biar kelihatan
+                endColor = themeColor;
+                textColor = Color.WHITE;
+            } else {
+                // MODE INAKTIF: Background Putih, Teks Biru
+                // Efek tekan (pressed) hanya berlaku jika tombol inaktif
+                boolean isPressed = getModel().isPressed();
+                startColor = isPressed ? new Color(220, 220, 220) : Color.WHITE;
+                endColor = isPressed ? Color.WHITE : new Color(230, 230, 230);
+                textColor = themeColor;
+            }
+
+            // 3. Gambar Background Button
             GradientPaint gp = new GradientPaint(0, 0, startColor, 0, getHeight(), endColor);
             g2.setPaint(gp);
             g2.fillRoundRect(0, 0, getWidth() - 3, getHeight() - 3, 20, 20);
 
-            // 3. Gambar Text
-            g2.setColor(themeColor); // Warna text sesuai header (#2b5288)
+            // Opsional: Tambah border tipis saat aktif biar lebih tegas (karena background header juga biru)
+            if (isActive) {
+                g2.setColor(new Color(255, 255, 255, 100)); // Putih transparan
+                g2.setStroke(new BasicStroke(1));
+                g2.drawRoundRect(0, 0, getWidth() - 4, getHeight() - 4, 20, 20);
+            }
+
+            // 4. Gambar Text
+            g2.setColor(textColor);
             FontMetrics fm = g2.getFontMetrics();
             int x = (getWidth() - 3 - fm.stringWidth(getText())) / 2;
             int y = ((getHeight() - 3 - fm.getHeight()) / 2) + fm.getAscent();
