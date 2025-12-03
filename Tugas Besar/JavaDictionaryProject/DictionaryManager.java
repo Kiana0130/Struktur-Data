@@ -38,9 +38,26 @@ public class DictionaryManager {
         gimmickActions.put("kalkulator", "CALCULATOR_APP");
         gimmickActions.put("calculator", "CALCULATOR_APP");
         gimmickActions.put("merah", "COLOR_RED");
+        gimmickActions.put("red", "COLOR_RED");
         gimmickActions.put("kuning", "COLOR_YELLOW");
+        gimmickActions.put("yellow", "COLOR_YELLOW");
         gimmickActions.put("hijau", "COLOR_GREEN");
+        gimmickActions.put("green", "COLOR_GREEN");
+        gimmickActions.put("blue", "COLOR_BLUE");
         gimmickActions.put("biru", "COLOR_BLUE");
+        gimmickActions.put("hitam", "COLOR_BLACK");
+        gimmickActions.put("black", "COLOR_BLACK");
+        gimmickActions.put("putih", "COLOR_WHITE");
+        gimmickActions.put("white", "COLOR_WHITE");
+        gimmickActions.put("ungu", "COLOR_PURPLE");
+        gimmickActions.put("purple", "COLOR_PURPLE");
+        gimmickActions.put("abu-abu", "COLOR_GREY");
+        gimmickActions.put("grey", "COLOR_GREY");
+        gimmickActions.put("gray", "COLOR_GREY"); // jaga-jaga spelling
+        gimmickActions.put("cokelat", "COLOR_BROWN");
+        gimmickActions.put("brown", "COLOR_BROWN");
+        gimmickActions.put("merah muda", "COLOR_PINK");
+        gimmickActions.put("pink", "COLOR_PINK");
         gimmickActions.put("mobil", "VEHICLE_INFO");
         gimmickActions.put("motor", "VEHICLE_INFO");
         gimmickActions.put("mobil listrik", "VEHICLE_INFO");

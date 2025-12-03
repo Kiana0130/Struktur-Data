@@ -282,17 +282,10 @@ public class DictionaryApp extends JFrame {
     }
 
     private JPanel createBaseCard(String title, String subtitle, String footer) {
-        JPanel card = new JPanel();
+        RoundedCardPanel card = new RoundedCardPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBackground(new Color(250, 250, 250));
-        
-        card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(230, 230, 230), 1, true),
-            BorderFactory.createEmptyBorder(12, 15, 12, 15)
-        ));
-        
         card.setAlignmentX(Component.LEFT_ALIGNMENT);
-        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1000)); 
+        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 110));
 
         JLabel primaryLabel = new JLabel(title);
         primaryLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -316,19 +309,18 @@ public class DictionaryApp extends JFrame {
         card.add(footerLabel);
 
         card.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                card.setBackground(new Color(240, 245, 255)); 
-                card.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(new Color(100, 149, 237), 1, true),
-                    BorderFactory.createEmptyBorder(12, 15, 12, 15)
-                ));
+                card.setBackground(new Color(245, 248, 255)); // Background jadi agak biru muda
+                card.setHovered(true);
+                card.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 card.setBackground(new Color(250, 250, 250)); 
-                card.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(new Color(230, 230, 230), 1, true),
-                    BorderFactory.createEmptyBorder(12, 15, 12, 15)
-                ));
+                card.setHovered(false);
+                card.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)
+                );
             }
         });
 
@@ -436,4 +428,61 @@ public class DictionaryApp extends JFrame {
         }
     }
 
+    // --- Custom Panel untuk Kartu (Rounded & Shadow) ---
+    private class RoundedCardPanel extends JPanel {
+        private Color borderColor = new Color(230, 230, 230); // Warna border default
+        private boolean isHovered = false;
+        private int arc = 25; // Kelengkungan sudut
+        private int shadowSize = 3; // Ketebalan bayangan
+
+        public RoundedCardPanel() {
+            setOpaque(false); // Transparan agar sudut luar terlihat bersih
+            setBackground(new Color(250, 250, 250)); // Warna dasar kartu
+            // Padding (Jarak teks ke pinggir kartu)
+            super.setBorder(new EmptyBorder(15, 20, 15, 20)); 
+        }
+
+        public void setHovered(boolean hovered) {
+            this.isHovered = hovered;
+            repaint(); // Gambar ulang saat status hover berubah
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int w = getWidth() - shadowSize;
+            int h = getHeight() - shadowSize;
+
+            // 1. Gambar Shadow (Bayangan)
+            g2.setColor(new Color(200, 200, 200, 80)); // Abu-abu transparan
+            g2.fillRoundRect(shadowSize, shadowSize, w, h, arc, arc);
+
+            // 2. Gambar Background Putih/Warna Dasar
+            g2.setColor(getBackground());
+            g2.fillRoundRect(0, 0, w, h, arc, arc);
+
+            // 3. Gambar Border (Garis Tepi)
+            if (isHovered) {
+                g2.setColor(new Color(100, 149, 237)); // Biru saat disorot
+                g2.setStroke(new BasicStroke(2)); // Garis lebih tebal
+            } else {
+                g2.setColor(borderColor); // Abu-abu halus saat biasa
+                g2.setStroke(new BasicStroke(1));
+            }
+            g2.drawRoundRect(0, 0, w - 1, h - 1, arc, arc);
+
+            g2.dispose();
+            super.paintComponent(g); // Lanjut gambar teks/label di atasnya
+        }
+        
+        // Mencegah border diganti oleh method lain yang tidak sengaja
+        @Override
+        public void setBorder(javax.swing.border.Border border) {
+            if (border instanceof EmptyBorder) {
+                 super.setBorder(border);
+            }
+        }
+    }
 }

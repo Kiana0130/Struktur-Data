@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 // Kelas ini mengurus semua logika tampilan Gimmick
 public class DictionaryGimmick {
-    private static final Color DEFAULT_HEADER_COLOR = new Color(240, 240, 240);
+    private static final Color DEFAULT_HEADER_COLOR = new Color(0x2b5288); 
     private static final Color DEFAULT_CONTENT_COLOR = Color.WHITE;
     private final JFrame mainFrame;
     private final JPanel headerPanel;
@@ -48,10 +48,19 @@ public class DictionaryGimmick {
             case "CALCULATOR_APP":
                 showSimpleCalculator(); 
                 break;
+            case "COLOR_RESET":
+                 changeAppBackgroundColor("RESET");
+                 break;
             case "COLOR_RED":
             case "COLOR_YELLOW":
             case "COLOR_GREEN":
             case "COLOR_BLUE":
+            case "COLOR_BLACK":
+            case "COLOR_WHITE":
+            case "COLOR_PURPLE":
+            case "COLOR_GREY":
+            case "COLOR_BROWN":
+            case "COLOR_PINK":
                 changeAppBackgroundColor(actionCode.split("_")[1]);
                 break;
             case "VEHICLE_INFO":
@@ -255,13 +264,15 @@ public class DictionaryGimmick {
     // GIMMICK 6: Warna Latar Belakang
     private void changeAppBackgroundColor(String colorName) {
         Color color;
+        Color headerColorToUse = DEFAULT_HEADER_COLOR;
+
         String hexColor;
         if (colorName.equals("RESET")) {
             color = DEFAULT_CONTENT_COLOR;
             Color headerColor = DEFAULT_HEADER_COLOR;
 
-        mainFrame.getContentPane().setBackground(headerColor);
-        headerPanel.setBackground(headerColor); 
+        mainFrame.getContentPane().setBackground(DEFAULT_HEADER_COLOR); // Frame background ikut header
+        headerPanel.setBackground(DEFAULT_HEADER_COLOR);
         scrollPane.getViewport().setBackground(DEFAULT_CONTENT_COLOR);
         contentPanel.setBackground(DEFAULT_CONTENT_COLOR);
         
@@ -270,23 +281,33 @@ public class DictionaryGimmick {
         return;
         }
 
-        
-        
         switch (colorName) {
             case "RED":
-                color = new Color(255, 100, 100); hexColor = "Merah"; break;
+                color = new Color(255, 100, 100); break;
             case "YELLOW":
-                color = new Color(255, 255, 100); hexColor = "Kuning"; break;
+                color = new Color(255, 255, 150); break; // Sedikit lebih soft
             case "GREEN":
-                color = new Color(100, 255, 100); hexColor = "Hijau"; break;
+                color = new Color(100, 255, 100); break;
             case "BLUE":
-                color = new Color(100, 100, 255); hexColor = "Biru"; break;
+                color = new Color(100, 200, 255); break; // Biru muda (beda dengan header)
+            case "BLACK":
+                color = new Color(50, 50, 50); break; // Abu gelap (biar teks hitam masih terbaca dikit)
+            case "WHITE":
+                color = Color.WHITE; break;
+            case "PURPLE":
+                color = new Color(200, 100, 255); break;
+            case "GREY":
+                color = new Color(200, 200, 200); break;
+            case "BROWN":
+                color = new Color(165, 42, 42); break;
+            case "PINK":
+                color = new Color(255, 182, 193); break;
             default: return;
         }
 
         // Mengatur warna di semua komponen
-        mainFrame.getContentPane().setBackground(color);
         headerPanel.setBackground(color); 
+        mainFrame.getContentPane().setBackground(color);
         scrollPane.getViewport().setBackground(color);
         contentPanel.setBackground(color);
         
