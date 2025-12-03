@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
-import java.awt.geom.RoundRectangle2D;
+// import java.awt.geom.RoundRectangle2D;
 
 public class DictionaryApp extends JFrame {
     private final DictionaryManager dictionaryManager;

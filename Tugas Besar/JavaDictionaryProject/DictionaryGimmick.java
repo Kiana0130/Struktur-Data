@@ -3,7 +3,7 @@ package JavaDictionaryProject;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
+// import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
@@ -18,6 +18,8 @@ public class DictionaryGimmick {
     private final JPanel headerPanel;
     private final JPanel contentPanel;
     private final JScrollPane scrollPane;
+    private boolean isFlipped = false;
+    private JPanel flippedPanelPlaceholder;
 
     // Konstruktor: Menerima referensi komponen utama dari DictionaryApp
     public DictionaryGimmick(JFrame mainFrame, JPanel headerPanel, JPanel contentPanel, JScrollPane scrollPane) {
@@ -242,24 +244,71 @@ public class DictionaryGimmick {
         calculatorFrame.setVisible(true);
     }
 
-    // GIMMICK 2: Flip (Simulasi putaran warna)
+    // GIMMICK 2: Flip (Dibalik)
     private void simulateFlipEffect() {
-        Color originalColor = mainFrame.getContentPane().getBackground();
-        mainFrame.getContentPane().setBackground(Color.CYAN); 
-        new Timer(100, e -> {
-            mainFrame.getContentPane().setBackground(Color.MAGENTA);
-            new Timer(100, e2 -> {
-                mainFrame.getContentPane().setBackground(Color.YELLOW);
-                new Timer(100, e3 -> {
-                    mainFrame.getContentPane().setBackground(originalColor);
-                    JOptionPane.showMessageDialog(mainFrame, "**GIMMICK AKTIF!** Efek 'Flip' (simulasi bolak-balik warna) Selesai!", "Easter Egg: Flip", JOptionPane.WARNING_MESSAGE);
-                    ((Timer)e3.getSource()).stop();
-                }).start();
-                ((Timer)e2.getSource()).stop();
-            }).start();
-            ((Timer)e.getSource()).stop();
-        }).start();
+        if (isFlipped) return;
+
+       Container contentPane = mainFrame.getContentPane();
+        BufferedImage image = new BufferedImage(contentPane.getWidth(), contentPane.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = image.createGraphics();
+        contentPane.print(g2d);
+        g2d.dispose();
+
+        contentPane.removeAll();
+
+        flippedPanelPlaceholder = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g2.rotate(Math.PI, getWidth() / 2.0, getHeight() / 2.0);
+                g2.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+                g2.dispose();
+            }
+        };
+        flippedPanelPlaceholder.setBackground(new Color(30, 30, 30));
+
+        flippedPanelPlaceholder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent e) {
+                execute("COLOR_RESET", ""); // Panggil fungsi reset
+            }
+        });
+
+        flippedPanelPlaceholder.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                // Kita anggap user ingin menghapus/mengganti kata, jadi kita reset dulu
+                execute("COLOR_RESET", "");
+                SwingUtilities.invokeLater(() -> {
+                });
+            }
+        });
+
+        contentPane.add(flippedPanelPlaceholder, BorderLayout.CENTER);
+        isFlipped = true;
+        contentPane.revalidate();
+        contentPane.repaint();
+        // Paksa fokus ke panel ini agar keyboard terdeteksi
+        SwingUtilities.invokeLater(() -> flippedPanelPlaceholder.requestFocusInWindow());
     }
+    //     Color originalColor = mainFrame.getContentPane().getBackground();
+    //     mainFrame.getContentPane().setBackground(Color.CYAN); 
+    //     new Timer(100, e -> {
+    //         mainFrame.getContentPane().setBackground(Color.MAGENTA);
+    //         new Timer(100, e2 -> {
+    //             mainFrame.getContentPane().setBackground(Color.YELLOW);
+    //             new Timer(100, e3 -> {
+    //                 mainFrame.getContentPane().setBackground(originalColor);
+    //                 JOptionPane.showMessageDialog(mainFrame, "**GIMMICK AKTIF!** Efek 'Flip' (simulasi bolak-balik warna) Selesai!", "Easter Egg: Flip", JOptionPane.WARNING_MESSAGE);
+    //                 ((Timer)e3.getSource()).stop();
+    //             }).start();
+    //             ((Timer)e2.getSource()).stop();
+    //         }).start();
+    //         ((Timer)e.getSource()).stop();
+    //     }).start();
+    // }
     
     // GIMMICK 6: Warna Latar Belakang
     private void changeAppBackgroundColor(String colorName) {
@@ -270,6 +319,22 @@ public class DictionaryGimmick {
         if (colorName.equals("RESET")) {
             color = DEFAULT_CONTENT_COLOR;
             Color headerColor = DEFAULT_HEADER_COLOR;
+        if (isFlipped) {
+                Container contentPane = mainFrame.getContentPane();
+                // Hapus panel gambar terbalik
+                if (flippedPanelPlaceholder != null) {
+                    contentPane.remove(flippedPanelPlaceholder);
+                    flippedPanelPlaceholder = null;
+                }
+
+                contentPane.add(headerPanel, BorderLayout.NORTH);
+                contentPane.add(scrollPane, BorderLayout.CENTER);
+
+                isFlipped = false;
+
+                contentPane.revalidate();
+                contentPane.repaint();
+            }
 
         mainFrame.getContentPane().setBackground(DEFAULT_HEADER_COLOR); // Frame background ikut header
         headerPanel.setBackground(DEFAULT_HEADER_COLOR);

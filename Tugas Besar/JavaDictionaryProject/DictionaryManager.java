@@ -41,7 +41,8 @@ public class DictionaryManager {
         idGimmicks.put("hantu", "HANTU_EFFECT");
         idGimmicks.put("hilang", "VANISH_EFFECT");
         idGimmicks.put("kalkulator", "CALCULATOR_APP");
-
+        idGimmicks.put("balik", "FLIP_EFFECT");
+        
         idGimmicks.put("merah", "COLOR_RED");
         idGimmicks.put("kuning", "COLOR_YELLOW");
         idGimmicks.put("hijau", "COLOR_GREEN");
