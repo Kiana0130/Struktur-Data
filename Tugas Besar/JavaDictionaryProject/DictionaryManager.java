@@ -12,60 +12,73 @@ import java.util.TreeMap;
 public class DictionaryManager {
     private final Map<String, List<DictionaryEntry>> wordMap;
     private final TreeMap<String, List<DictionaryEntry>> sortedWords;
-    private final Map<String, String> gimmickActions;
+    private final Map<String, String> idGimmicks;
+    private final Map<String, String> engGimmicks;
     
     // private static final String CSV_FILE = "Struktur-Data/Tugas Besar/JavaDictionaryProject/indo-english-complete.csv"; 
 
     public DictionaryManager() {
         this.wordMap = new HashMap<>();
         this.sortedWords = new TreeMap<>();
-        this.gimmickActions = new HashMap<>();
+        this.idGimmicks = new HashMap<>();
+        this.engGimmicks = new HashMap<>();
         loadInitialData();
         loadGimmickData();
     }
 
-    public String getGimmickAction(String word) {
+    public String getGimmickAction(String word, String currentLanguage) {
         if (word == null) return null;
-        return gimmickActions.get(word.toLowerCase());
+        String key = word.toLowerCase();
+
+        if (currentLanguage.equals("ID")) {
+            return idGimmicks.get(key);
+        } else {
+            return engGimmicks.get(key);
+        }
     }
 
     private void  loadGimmickData() {
-        gimmickActions.put("hantu", "HANTU_EFFECT");
-        gimmickActions.put("ghost", "HANTU_EFFECT");
-        gimmickActions.put("flip", "FLIP_EFFECT");
-        gimmickActions.put("hilang", "VANISH_EFFECT");
-        gimmickActions.put("missing", "VANISH_EFFECT");
-        gimmickActions.put("kalkulator", "CALCULATOR_APP");
-        gimmickActions.put("calculator", "CALCULATOR_APP");
-        gimmickActions.put("merah", "COLOR_RED");
-        gimmickActions.put("red", "COLOR_RED");
-        gimmickActions.put("kuning", "COLOR_YELLOW");
-        gimmickActions.put("yellow", "COLOR_YELLOW");
-        gimmickActions.put("hijau", "COLOR_GREEN");
-        gimmickActions.put("green", "COLOR_GREEN");
-        gimmickActions.put("blue", "COLOR_BLUE");
-        gimmickActions.put("biru", "COLOR_BLUE");
-        gimmickActions.put("hitam", "COLOR_BLACK");
-        gimmickActions.put("black", "COLOR_BLACK");
-        gimmickActions.put("putih", "COLOR_WHITE");
-        gimmickActions.put("white", "COLOR_WHITE");
-        gimmickActions.put("ungu", "COLOR_PURPLE");
-        gimmickActions.put("purple", "COLOR_PURPLE");
-        gimmickActions.put("abu-abu", "COLOR_GREY");
-        gimmickActions.put("grey", "COLOR_GREY");
-        gimmickActions.put("gray", "COLOR_GREY"); // jaga-jaga spelling
-        gimmickActions.put("cokelat", "COLOR_BROWN");
-        gimmickActions.put("brown", "COLOR_BROWN");
-        gimmickActions.put("merah muda", "COLOR_PINK");
-        gimmickActions.put("pink", "COLOR_PINK");
-        gimmickActions.put("mobil", "VEHICLE_INFO");
-        gimmickActions.put("motor", "VEHICLE_INFO");
-        gimmickActions.put("mobil listrik", "VEHICLE_INFO");
-        gimmickActions.put("motor listrik", "VEHICLE_INFO");
-        gimmickActions.put("car", "VEHICLE_INFO");
-        gimmickActions.put("motorcycle", "VEHICLE_INFO");
-        gimmickActions.put("electric car", "VEHICLE_INFO");
-        gimmickActions.put("electric motorcyle", "VEHICLE_INFO");
+        idGimmicks.put("hantu", "HANTU_EFFECT");
+        idGimmicks.put("hilang", "VANISH_EFFECT");
+        idGimmicks.put("kalkulator", "CALCULATOR_APP");
+
+        idGimmicks.put("merah", "COLOR_RED");
+        idGimmicks.put("kuning", "COLOR_YELLOW");
+        idGimmicks.put("hijau", "COLOR_GREEN");
+        idGimmicks.put("biru", "COLOR_BLUE");
+        idGimmicks.put("hitam", "COLOR_BLACK");
+        idGimmicks.put("putih", "COLOR_WHITE");
+        idGimmicks.put("ungu", "COLOR_PURPLE");
+        idGimmicks.put("abu-abu", "COLOR_GREY");
+        idGimmicks.put("cokelat", "COLOR_BROWN");
+        idGimmicks.put("merah muda", "COLOR_PINK");
+
+        idGimmicks.put("mobil", "VEHICLE_INFO");
+        idGimmicks.put("motor", "VEHICLE_INFO");
+        idGimmicks.put("mobil listrik", "VEHICLE_INFO");
+        idGimmicks.put("motor listrik", "VEHICLE_INFO");
+
+        engGimmicks.put("ghost", "HANTU_EFFECT");
+        engGimmicks.put("flip", "FLIP_EFFECT");
+        engGimmicks.put("missing", "VANISH_EFFECT");
+        engGimmicks.put("calculator", "CALCULATOR_APP");
+
+        engGimmicks.put("red", "COLOR_RED"); 
+        engGimmicks.put("yellow", "COLOR_YELLOW");
+        engGimmicks.put("green", "COLOR_GREEN");
+        engGimmicks.put("blue", "COLOR_BLUE");
+        engGimmicks.put("black", "COLOR_BLACK");
+        engGimmicks.put("white", "COLOR_WHITE");
+        engGimmicks.put("purple", "COLOR_PURPLE");
+        engGimmicks.put("grey", "COLOR_GREY");
+        engGimmicks.put("gray", "COLOR_GREY");
+        engGimmicks.put("brown", "COLOR_BROWN");
+        engGimmicks.put("pink", "COLOR_PINK");
+
+        engGimmicks.put("car", "VEHICLE_INFO");
+        engGimmicks.put("motorcycle", "VEHICLE_INFO");
+        engGimmicks.put("electric car", "VEHICLE_INFO");
+        engGimmicks.put("electric motorcycle", "VEHICLE_INFO");
     }
 
     public void addEntry(String indo, String eng, String example) {

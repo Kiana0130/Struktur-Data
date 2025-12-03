@@ -177,14 +177,12 @@ public class DictionaryApp extends JFrame {
         // --- LOGIKA GIMMICK YANG DIREVISI ---
         String gimmickAction = null;
         if (!cleanQuery.isEmpty()) {
-            gimmickAction = dictionaryManager.getGimmickAction(cleanQuery);
+            gimmickAction = dictionaryManager.getGimmickAction(cleanQuery, currentLanguage);
         }
 
         if (gimmickAction != null) {
-            // 1. Trigger the gimmick if found (e.g., "merah")
             triggerGimmick(gimmickAction, query.trim());
         } else {
-            // 2. Reset the color/gimmick if not found, or if query is empty
             if (dictionaryGimmick != null) {
                 dictionaryGimmick.execute("COLOR_RESET", "");
             }
