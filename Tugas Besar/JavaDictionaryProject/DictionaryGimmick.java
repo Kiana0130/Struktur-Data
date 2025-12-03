@@ -3,6 +3,7 @@ package JavaDictionaryProject;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
@@ -56,6 +57,9 @@ public class DictionaryGimmick {
             case "VEHICLE_INFO":
                 triggerVehicleGimmick(word);
                 break;
+            case "HIDUP_EFFECT":
+                displayImageGimmick("Hidup", word, "Gimmick/Hidup.gif");
+                break;
         }
     }
     
@@ -66,14 +70,11 @@ public class DictionaryGimmick {
         String file = "";
         String lowercaseWord = word.toLowerCase();
 
-        if (lowercaseWord.contains("mobil listrik")) {
-            file = "Gimmick/Mobil listrik.mp4";
-        } else if (lowercaseWord.contains("motor listrik")) {
-            file = "Gimmick/Motor listrik.mp4";
-        } else if (lowercaseWord.contains("mobil") || lowercaseWord.contains("car")) {
-            file = "/Gimmick/Mobil.jpeg";
+        
+        if (lowercaseWord.contains("mobil") || lowercaseWord.contains("car")) {
+            file = "Gimmick/MobilListrik.gif";
         } else if (lowercaseWord.contains("motor") || lowercaseWord.contains("motorcycle")) {
-            file = "/Gimmick/Motor.jpeg";
+            file = "Gimmick/MotorListrik.gif";
         }
         
         if (!file.isEmpty()) {
@@ -86,9 +87,15 @@ public class DictionaryGimmick {
     private void displayImageGimmick(String title, String word, String imagePath) {
         JDialog imageDialog = new JDialog(mainFrame, "Easter Egg: " + title);
         imageDialog.setModalityType(Dialog.ModalityType.MODELESS);
-        imageDialog.setSize(920, 700); 
+        imageDialog.setUndecorated(true);
+
+        if (title.equalsIgnoreCase("Hantu")) {
+            imageDialog.setSize(1920, 1080); 
+        } else {
+            imageDialog.setSize(980, 700); 
+        }
+
         imageDialog.setLocationRelativeTo(mainFrame);
-        imageDialog.setUndecorated(true); 
 
         JLabel imageLabel = new JLabel("Memuat Gimmick...", SwingConstants.CENTER);
 
@@ -100,16 +107,21 @@ public class DictionaryGimmick {
                 throw new IOException("File Gimmick tidak ditemukan di path: " + imagePath);
             }
 
-            BufferedImage image = ImageIO.read(imageUrl);
-            
-            Image scaledImage = image.getScaledInstance(imageDialog.getWidth(), imageDialog.getHeight(), Image.SCALE_SMOOTH);
-            imageLabel.setIcon(new ImageIcon(scaledImage));
-            imageLabel.setText(null); 
-            
-            if (imagePath.toLowerCase().endsWith(".mp4") || imagePath.toLowerCase().endsWith(".avi")) {
-                imageLabel.setText("Simulasi Video: File " + imagePath + " ditampilkan sebagai gambar.");
-                imageLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-                imageLabel.setVerticalTextPosition(SwingConstants.TOP);
+            if (imagePath.toLowerCase().endsWith(".gif")) {
+                ImageIcon gifIcon = new ImageIcon(imageUrl);
+                
+                imageLabel.setIcon(gifIcon);
+                imageLabel.setText(null);
+            } else {
+                // JPEG (boleh scale)
+                BufferedImage image = ImageIO.read(imageUrl);
+                Image scaledImage = image.getScaledInstance(
+                        imageDialog.getWidth(),
+                        imageDialog.getHeight(),
+                        Image.SCALE_SMOOTH);
+
+                imageLabel.setIcon(new ImageIcon(scaledImage));
+                imageLabel.setText(null);
             }
 
         } catch (Exception e) {
@@ -120,12 +132,9 @@ public class DictionaryGimmick {
         imageDialog.add(imageLabel, BorderLayout.CENTER);
         imageDialog.setVisible(true);
 
-        Timer timer = new Timer(2500, new ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                imageDialog.dispose(); 
-                ((Timer)e.getSource()).stop();
-            }
+            Timer timer = new Timer(3000, e -> {
+            imageDialog.dispose();
+            ((Timer)e.getSource()).stop();
         });
         timer.setRepeats(false); 
         timer.start();
