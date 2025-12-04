@@ -218,31 +218,61 @@ public class DictionaryGimmick {
     private void simulateFlipEffect() {
         if (isFlipped) return;
 
-    Container contentPane = mainFrame.getContentPane();
-        BufferedImage image = new BufferedImage(contentPane.getWidth(), contentPane.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Container contentPane = mainFrame.getContentPane();
+        int w = contentPane.getWidth();
+        int h = contentPane.getHeight();
+
+        // ============================================
+        // 1. Screenshot tampilan sebelum dihapus
+        // ============================================
+        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
         contentPane.print(g2d);
         g2d.dispose();
 
         contentPane.removeAll();
 
-        flippedPanelPlaceholder = new JPanel() {
+        // ============================================
+        // 2. Panel placeholder yang akan dianimasikan
+        // ============================================
+        var flippedPanelPlaceholder = new JPanel() {
+
+            double angle = 0;
+            double target = Math.PI;
+            Timer timer;
+
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                g2.rotate(Math.PI, getWidth() / 2.0, getHeight() / 2.0);
-                g2.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+                g2.rotate(angle, getWidth() / 2.0, getHeight() / 2.0);
+                g2.drawImage(image, 0, 0, getWidth(), getHeight(), null);
                 g2.dispose();
             }
-        };
-        flippedPanelPlaceholder.setBackground(new Color(30, 30, 30));
 
+            void startAnimation() {
+                timer = new Timer(7, e -> {
+                    angle += 0.05;
+                    if (angle >= target) {
+                        angle = target;
+                        timer.stop();
+                    }
+                    repaint();
+                });
+                timer.start();
+            }
+        };
+
+
+        flippedPanelPlaceholder.setBackground(new Color(30, 30, 30));
+        flippedPanelPlaceholder.setFocusable(true);
+
+        // ============================================
+        // 4. Event untuk reset (klik / keyboard)
+        // ============================================
         flippedPanelPlaceholder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent e) {
-                execute("COLOR_RESET", ""); // Panggil fungsi reset
+                execute("COLOR_RESET", "");
             }
         });
 
@@ -250,17 +280,24 @@ public class DictionaryGimmick {
             @Override
             public void keyPressed(java.awt.event.KeyEvent e) {
                 execute("COLOR_RESET", "");
-                SwingUtilities.invokeLater(() -> {
-                });
             }
         });
 
+        // ============================================
+        // 5. Tampilkan panel + mulai animasi
+        // ============================================
         contentPane.add(flippedPanelPlaceholder, BorderLayout.CENTER);
-        isFlipped = true;
         contentPane.revalidate();
         contentPane.repaint();
-        SwingUtilities.invokeLater(() -> flippedPanelPlaceholder.requestFocusInWindow());
+
+        isFlipped = true;
+
+        SwingUtilities.invokeLater(() -> {
+            flippedPanelPlaceholder.requestFocusInWindow();
+            flippedPanelPlaceholder.startAnimation();   // MULAI ROTASI
+        });
     }
+
 
     private void triggerVehicleGimmick(String word) {
         Map<String, String> files = Map.of(
@@ -285,6 +322,18 @@ public class DictionaryGimmick {
     private void changeAppBackgroundColor(String colorName) {
 
         if (colorName.equals("RESET")) {
+            
+            if (isFlipped) {
+                Container contentPane = mainFrame.getContentPane();
+                contentPane.removeAll();
+                contentPane.add(headerPanel, BorderLayout.NORTH);
+                contentPane.add(scrollPane, BorderLayout.CENTER);
+
+                isFlipped = false;
+
+                contentPane.revalidate();
+                contentPane.repaint();
+            }
             headerPanel.setBackground(DEFAULT_HEADER_COLOR);
             scrollPane.getViewport().setBackground(DEFAULT_CONTENT_COLOR);
             contentPanel.setBackground(DEFAULT_CONTENT_COLOR);

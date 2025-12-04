@@ -20,8 +20,8 @@ public class DictionaryManager {
     public DictionaryManager() {
         //this.wordMap = new HashMap<>();
         this.sortedWords = new TreeMap<>();
-        this.idGimmicks = new HashMap<>();
-        this.engGimmicks = new HashMap<>();
+        this.idGimmicks = new TreeMap<>();
+        this.engGimmicks = new TreeMap<>();
         loadInitialData();
         loadGimmickData();
     }
@@ -813,7 +813,7 @@ public class DictionaryManager {
         "674,hidup,exist,Hidup adalah perjuangan.",
         "675,hidup,existence,Hidup adalah perjuangan.",
         "676,hidup,life,Hidup adalah perjuangan.",
-        "677,hidup,live,Hidup adalah perjuangan.",
+        "677,hidup,alive,Hidup adalah perjuangan.",
         "678,hilang,disappear,Dompet saya hilang di pasar.",
         "679,hilang,go away,Dompet saya hilang di pasar.",
         "680,hilang,gone,Dompet saya hilang di pasar.",
