@@ -75,7 +75,7 @@ public class DictionaryGimmick {
         registerColor("PINK");
 
         gimmickRegistry.put("HIDUP_EFFECT", word ->
-                displayImageGimmick("Hidup", word, "Gimmick/HidupJ.gif"));
+                displayImageGimmick("Hidup", word, "Gimmick/Hidup.gif"));
 
         gimmickRegistry.put("VEHICLE_INFO", this::triggerVehicleGimmick);
     }
@@ -334,6 +334,7 @@ public class DictionaryGimmick {
                 contentPane.revalidate();
                 contentPane.repaint();
             }
+
             headerPanel.setBackground(DEFAULT_HEADER_COLOR);
             scrollPane.getViewport().setBackground(DEFAULT_CONTENT_COLOR);
             contentPanel.setBackground(DEFAULT_CONTENT_COLOR);

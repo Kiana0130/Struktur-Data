@@ -58,7 +58,6 @@ public class DictionaryManager {
         idGimmicks.put("mobil", "VEHICLE_INFO");
         idGimmicks.put("motor", "VEHICLE_INFO");
 
-
         engGimmicks.put("ghost", "HANTU_EFFECT");
         engGimmicks.put("flip", "FLIP_EFFECT");
         engGimmicks.put("missing", "VANISH_EFFECT");
@@ -115,6 +114,7 @@ public class DictionaryManager {
     private void loadInitialData() {
         String[] rawData = {
         "0,abu,ash,Meja itu penuh dengan abu rokok.",
+        "1,hidup,alive, hidup jokowi.",
         "0,kalkulator,calculator,orang itu berhitung menggunakan kalkulator",
         "1,merah,red,bunga mawar itu berwarna merah menyala",
         "2,biru,blue,langit terlihat sangat biru hari ini",
